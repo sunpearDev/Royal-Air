@@ -1,7 +1,3 @@
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/function.js">
-</script>
-
 <header class="header_area">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">

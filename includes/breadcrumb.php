@@ -6,14 +6,14 @@
         <div class="page-cover text-center">
             <h2 class="page-cover-tittle">
                 <script>
-                   getTitle
+                    getTitle()
                 </script>
             </h2>
             <ol class="breadcrumb">
                 <li><a href="/index">Home</a></li>
                 <li class="active">
                     <script>
-                        getTitle
+                        getTitle()
                     </script>
                 </li>
             </ol>
