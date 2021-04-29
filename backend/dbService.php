@@ -27,9 +27,12 @@ class DbServices
         if ($this->connection == null) {
             die("Can't connect database.");
         }
-        $stm = $this->pdo->prepare($sql);
+        $stm = $this->connection->prepare($sql);
+
+         
+
         if ($stm->execute($data)) {
-            return $stm->fetchAll($fetchMode);
+            return $stm->rowCount();
         } else {
             print_r($stm->errorInfo());
             die();
@@ -46,16 +49,18 @@ class DbServices
     function create($table, $data)
     {
         $sql = "insert into $table ";
+
         $param1 = '(';
+        $param2 = '(';
         foreach ($data as $key => $val) {
-            $param1 .= ':' . $key . ' ,';
+            $param1 .= $key . ' ,';
+            $param2 .= ':' . $key . ' ,';
         }
-        $param1[strlen($param1)] = ')';
-        $param2 = $param1;
-        while (strpos(':', $param2)) {
-            $param1[strpos(':', $param2)] = '';
-        }
-        return $this->execute($sql + $param2 + ' values ' + $param1, $data);
+        $param1[strlen($param1) - 1] = ')';
+        $param2[strlen($param2) - 1] = ')';
+        $res=$this->execute($sql . $param1 . ' values ' . $param2, $data);
+        if ($res>0) return true;
+        else return false;
     }
     function update($table, $id, $data)
     {
@@ -65,11 +70,16 @@ class DbServices
         }
         $sql[strlen($sql)] = ' ';
         $sql .= "where" . $id['name'] . " ='" . $id['value'] . "'";
-        return $this->execute($sql, $data);
+        
+        $res=$this->execute($sql, $data);
+        if ($res>0) return true;
+        else return false;
     }
     function delete($table, $id)
     {
         $sql = "delete from $table where " . $id['name'] . " = " . $id['value'];
-        return $this->execute($sql);
+        $res=$this->execute($sql);
+        if ($res>0) return true;
+        else return false;
     }
 }

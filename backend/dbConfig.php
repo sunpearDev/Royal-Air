@@ -1,8 +1,8 @@
 <?php
-    define("DB_HOST","bgln0iskewmff7ykixfa-mysql.services.clever-cloud.com");
-    define("DB_USER","u2ogpsmix7fcivpq");
-    define("DB_PASSWORD","ZLHJm8Ujnol4fRyW5g1A");
-    define("DB_NAME","bgln0iskewmff7ykixfa");
+    define("DB_HOST","localhost");
+    define("DB_USER","root");
+    define("DB_PASSWORD","");
+    define("DB_NAME","royal_side");
     // PDO Attributes
     define("PDOATTRS", [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

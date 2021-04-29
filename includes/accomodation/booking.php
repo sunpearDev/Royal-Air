@@ -55,8 +55,9 @@
                         <div class="col-md-4">
                             <div class="book_tabel_item">
                                 <div class="input-group">
-                                    <select class="wide" name="room">
-                                        <option data-display="ROOM" >Number of Rooms</option>
+                                    <select class="wide" name="room" value="<?php if (isset($_GET['room'])) echo $_GET['room'];
+                                        else echo 0?>">
+                                        <option data-display="ROOM" value="0">Number of Rooms</option>
                                         <option value="1">Room 01</option>
                                         <option value="2">Room 02</option>
                                         <option value="3">Room 03</option>
