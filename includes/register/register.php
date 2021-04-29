@@ -8,9 +8,10 @@ if (isset($_POST['submit'])) {
     else {
         $account = new Account();
         $res = $account->register(['username' => $_POST['username'], 'email' => $_POST['email'], 'password' => sha1($_POST['password']), 'account_category' => "customer"]);
+        $message = $res['message'];
     }
-    echo "<script>alert('" . $res['message'] . "')</script>";
-    if ($res['status']) {
+    echo "<script>alert('" . $message . "')</script>";
+    if (isset($res['status']) && $res['status']) {
         echo "<script>  window.location.pathname='login.php'</script>";
     }
 }
@@ -25,17 +26,17 @@ if (isset($_POST['submit'])) {
                     <h1 class="title_color">Register</h1>
                     <form action="./register.php" method="POST">
                         <div class="mt-30">
-                            <input type="text" name="username" placeholder="User name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'User name'" required class="single-input">
+                            <input type="text" name="username" placeholder="User name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'User name'"  required class="single-input">
                         </div>
                         <div class="mt-10">
                             <input type="email" name="email" id="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required class="single-input">
                         </div>
 
                         <div class="mt-10">
-                            <input type="password" name="password" id="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required class="single-input">
+                            <input type="password" name="password" id="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"  required class="single-input">
                         </div>
                         <div class="mt-10" style="position: relative;">
-                            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm password'" required class="single-input" onchange="check()">
+                            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm password'" required class="single-input" onchange="check()">
                             <span id="message" style="position: absolute; right:-30px ; top:-5px; transform: translate(-50%,50%);"></span>
                         </div>
 

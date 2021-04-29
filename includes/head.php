@@ -14,6 +14,8 @@
 <!-- main css -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
+<!-- custome function -->
+<script src="js/function.js"></script>
 <!-- font awesome -->
-<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="fontawesome-5.15.3/css/all.css">
 

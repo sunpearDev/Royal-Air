@@ -2,10 +2,11 @@
 include("./backend/Account.php");
 if (isset($_POST['submit'])) {
     $account = new Account();
-    $res = $account->login(['username' => $_POST['username'], 'password' =>$_POST['password']]);
+    $res = $account->login(['username' => $_POST['username'], 'password' => $_POST['password']]);
     echo "<script>alert('" . $res['message'] . "')</script>";
-    if ($res['status']) {
-        echo "<script>  window.location.pathname='index.php'</script>";
+    if (isset($res['status']) && $res['status']) {
+        echo '<script> document.cookie="username=' . $res['username'] . ' ;max-age=864000"; </script>';
+        echo "<script> window.location.pathname='index.php'</script>";
     }
 }
 ?>
