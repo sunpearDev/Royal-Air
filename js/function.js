@@ -25,10 +25,11 @@ function navigatorSelected() {
         }
 }
 function setCookie(key, value) {
-    alert(key)
     document.cookie = key + "=" + value + "; max-age=864000; "
 }
 function logout() {
-    document.cookie = "username = ; max-age=0 "
-    window.location.reload()
+    document.cookie = "token = ; max-age=0 ";
+    document.cookie = "username = ; max-age=0 ";
+    window.location='index.php'
+    window.location.reload();
 }

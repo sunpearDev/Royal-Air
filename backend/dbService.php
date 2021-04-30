@@ -29,7 +29,7 @@ class DbServices
         }
         $stm = $this->connection->prepare($sql);
 
-         
+
 
         if ($stm->execute($data)) {
             return $stm->rowCount();
@@ -38,11 +38,46 @@ class DbServices
             die();
         }
     }
+    function encrypt($string)
+    {
+        $output = '';
+
+        $encrypt_method = "AES-256-CBC";
+        $secret_key = 'This is my secret key';
+        $secret_iv = 'This is my secret iv';
+
+        // hash
+        $key = hash('sha256', $secret_key);
+
+        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+        $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+        $output = base64_encode($output);
+        return $output;
+    }
+    function decrypt($string)
+    {
+        $output = '';
+
+        $encrypt_method = "AES-256-CBC";
+        $secret_key = 'This is my secret key';
+        $secret_iv = 'This is my secret iv';
+
+        // hash
+        $key = hash('sha256', $secret_key);
+
+        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+        $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+        return $output;
+    }
     function getAll($table)
     {
         return $this->query("select * from $table");
     }
-    function getOne($table, $id)
+    function getBy($table, $id)
     {
         return $this->query("select * from $table where " . $id['name'] . " = '" . $id['value'] . "'");
     }
@@ -58,8 +93,8 @@ class DbServices
         }
         $param1[strlen($param1) - 1] = ')';
         $param2[strlen($param2) - 1] = ')';
-        $res=$this->execute($sql . $param1 . ' values ' . $param2, $data);
-        if ($res>0) return true;
+        $res = $this->execute($sql . $param1 . ' values ' . $param2, $data);
+        if ($res > 0) return true;
         else return false;
     }
     function update($table, $id, $data)
@@ -70,16 +105,16 @@ class DbServices
         }
         $sql[strlen($sql)] = ' ';
         $sql .= "where" . $id['name'] . " ='" . $id['value'] . "'";
-        
-        $res=$this->execute($sql, $data);
-        if ($res>0) return true;
+
+        $res = $this->execute($sql, $data);
+        if ($res > 0) return true;
         else return false;
     }
     function delete($table, $id)
     {
         $sql = "delete from $table where " . $id['name'] . " = " . $id['value'];
-        $res=$this->execute($sql);
-        if ($res>0) return true;
+        $res = $this->execute($sql);
+        if ($res > 0) return true;
         else return false;
     }
 }
