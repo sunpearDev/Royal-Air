@@ -12,7 +12,7 @@
 
     <?php include('./includes/accomodation.php') ?>
 
-    <?php include('./includes/accomodation/booking.php') ?>
+    <?php include('./includes/accomodation/book_area.php') ?>
 
     <?php include('./includes/accomodation/room.php') ?>
 

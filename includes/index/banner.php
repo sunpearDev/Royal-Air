@@ -13,7 +13,7 @@
     </div>
     <div class="hotel_booking_area position">
         <div class="container">
-            <?php include('./includes/accomodation/booking.php') ?>
+            <?php include('./includes/accomodation/book_area.php') ?>
         </div>
     </div>
 </section>

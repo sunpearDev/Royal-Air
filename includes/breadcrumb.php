@@ -1,3 +1,5 @@
+<!-- custome function -->
+<script src="js/function.js"></script>
 <section class="breadcrumb_area">
     <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background="">
     </div>

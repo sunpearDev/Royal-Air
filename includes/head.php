@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
 <!-- main css -->
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/abc.css">
 <link rel="stylesheet" href="css/responsive.css">
 <!-- custome function -->
 <script src="js/function.js"></script>

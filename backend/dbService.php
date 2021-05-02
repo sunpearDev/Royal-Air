@@ -38,6 +38,18 @@ class DbServices
             die();
         }
     }
+    function beginTransaction()
+    {
+        $this->connection->beginTransaction();
+    }
+    function commit()
+    {
+        $this->connection->commit();
+    }
+    function rollback()
+    {
+        $this->connection->rollBack();
+    }
     function encrypt($string)
     {
         $output = '';
@@ -103,9 +115,9 @@ class DbServices
         foreach ($data as $key => $val) {
             $sql .= $key . '=:' . $key . ' ,';
         }
-        $sql[strlen($sql)] = ' ';
-        $sql .= "where" . $id['name'] . " ='" . $id['value'] . "'";
-
+        $sql[strlen($sql) - 1] = ' ';
+        $sql .= " where " . $id['name'] . " ='" . $id['value'] . "'";
+        echo $sql;
         $res = $this->execute($sql, $data);
         if ($res > 0) return true;
         else return false;
