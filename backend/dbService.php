@@ -93,6 +93,11 @@ class DbServices
     {
         return $this->query("select * from $table where " . $id['name'] . " = '" . $id['value'] . "'");
     }
+    function getMultiTable($table, $id)
+    {
+        $sql = "select * from $table[0] join $table[1] on $table[0]." . $id['name'] . "=$table[1]." . $id['name'] . " where $table[0]." . $id['name'] . " = '" . $id['value'] . "'";
+        return $this->query($sql);
+    }
     function create($table, $data)
     {
         $sql = "insert into $table ";
@@ -116,8 +121,12 @@ class DbServices
             $sql .= $key . '=:' . $key . ' ,';
         }
         $sql[strlen($sql) - 1] = ' ';
-        $sql .= " where " . $id['name'] . " ='" . $id['value'] . "'";
-        echo $sql;
+        if (count($id) < 3)
+            $sql .= " where " . $id['name'] . " ='" . $id['value'] . "'";
+        else {
+            $sql .= " where " . $id['name1'] . " ='" . $id['value1'] . "' and " . $id['name2'] . " =" . $id['value2'];
+        }
+        //echo $sql;
         $res = $this->execute($sql, $data);
         if ($res > 0) return true;
         else return false;

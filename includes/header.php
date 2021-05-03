@@ -23,7 +23,7 @@
                     </li>
                     <?php
                     if (isset($_COOKIE['username'])) {
-                        echo '<li class="nav-item"><a class="nav-link" href="/profile.php"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;' .$_COOKIE['username']. '</a></li><li class="nav-item"><a class="nav-link" href="/index.php" onclick="logout()"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link" href="/account.php"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;' .$_COOKIE['username']. '</a></li><li class="nav-item"><a class="nav-link" href="/index.php" onclick="logout()"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a></li>';
                     } else
                         echo '<li class="nav-item"><a class="nav-link" href="/login.php"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Login</a></li><li class="nav-item"><a class="nav-link" href="/register.php"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Register</a></li>';
                     ?>

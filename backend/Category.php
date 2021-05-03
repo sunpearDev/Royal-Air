@@ -2,6 +2,9 @@
 require_once('dbService.php');
 class Category extends DbServices
 {
+    function getCategory($id){
+        return $this->getBy("room_category",['name' => 'category_ID', 'value' => $id]);
+    }
     function searchRoom($quantity, $adult, $child)
     {
         $multiplesBody = $adult + $child / 2;
