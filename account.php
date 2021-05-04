@@ -1,3 +1,7 @@
+<?php
+    if (isset($_COOKIE['token']))
+    echo "<script> window.location.pathname='index.php'</script>";
+?>
 <!doctype html>
 <html lang="en">
 

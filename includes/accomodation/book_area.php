@@ -1,5 +1,5 @@
 <form class="hotel_booking_area" method="post" action="<?php if (isset($_COOKIE['token'])) echo './booking.php';
-                                                        else echo './login?login=false'; ?>">
+                                                        else echo './login'; ?>">
     <div class="container">
         <div class="row hotel_booking_table">
             <div class="col-md-3">
