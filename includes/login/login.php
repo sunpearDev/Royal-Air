@@ -1,14 +1,16 @@
 <?php
-include("./backend/Account.php"); 
+include("./backend/Account.php");
 if (isset($_POST['submit'])) {
     $account = new Account();
     $res = $account->login(['username' => $_POST['username'], 'password' => $_POST['password']]);
     echo "<script>alert('" . $res['message'] . "')</script>";
     if (isset($res['status']) && $res['status']) {
         echo '<script> document.cookie="token=' . $res['token'] . ' ;max-age=864000"; </script>';
-        
         echo '<script> document.cookie="username=' . $res['username'] . ' ;max-age=864000"; </script>';
-        echo "<script> window.location.pathname='index.php'</script>";
+        if (isset($res['account_category']) && $res['account_category'] == "admin")
+            echo "<script> window.location.pathname='/admin/index'</script>";
+        else if ($res['account_category'] == "customer")
+            echo "<script> window.location.pathname='index.php'</script>";
     }
 }
 ?>

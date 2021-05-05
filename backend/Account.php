@@ -22,7 +22,7 @@ class Account extends DbServices
         if (count($res) == 0)
             return ['message' => "Không tồn tại tài khoản.", "status" => false];
         else if ($res[0]['password'] == sha1($data['password'])) {
-            return ['message' => "Đăng nhập thành công.", "status" => true, "token" => $this->encrypt($res[0]['user_id']), 'username' => $res[0]['username']];
+            return ['message' => "Đăng nhập thành công.", "status" => true, "token" => $this->encrypt($res[0]['user_id']), 'username' => $res[0]['username'],"account_category"=>$res[0]['account_category']];
         } else return ['message' => "Mật khẩu hoặc tên tài khoản không đúng.", "status" => false];
     }
     function validateUser($token)
