@@ -25,11 +25,10 @@ class Account extends DbServices
             return ['message' => "Đăng nhập thành công.", "status" => true, "token" => $this->encrypt($res[0]['user_id']), 'username' => $res[0]['username'],"account_category"=>$res[0]['account_category']];
         } else return ['message' => "Mật khẩu hoặc tên tài khoản không đúng.", "status" => false];
     }
-    function validateUser($token)
+    function validateAdmin($token)
     {
         $res = $this->getBy("account", ['name' => 'user_id', 'value' => $this->decrypt($token)]);
-        if ($res)
-            return ['message' => "Xác thực tài khoản thành công."];
-        else return ['message' => "Xác thực tài khoản thất bại."];
+        if ($res[0]['account_category']=='admin') return true;
+        else return false;
     }
 }

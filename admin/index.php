@@ -3,6 +3,12 @@
 include('includes/header.php');
 include('includes/navbar.php');
 
+include('../backend/Account.php');
+$account = new Account();
+if (!$account->validateAdmin($_COOKIE['token'])){
+    echo "<script> window.location.pathname='index.php'</script>";
+}
+
 ?>
 
 <!-- Content Wrapper -->
