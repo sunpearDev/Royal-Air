@@ -1,5 +1,5 @@
 <?php
-    if (isset($_COOKIE['token']))
+    if (!isset($_COOKIE['token']))
     echo "<script> window.location.pathname='index.php'</script>";
 ?>
 <!doctype html>

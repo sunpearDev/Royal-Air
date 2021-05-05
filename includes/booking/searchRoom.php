@@ -72,7 +72,7 @@ $res = $category->searchRoom($_POST['quantity'], $_POST['adult'], $_POST['child'
                                         <div class="mb-1 text-muted"><i class="fas fa-square"></i> ' . $item['area'] . ' m2</div>
                                         <div class="mb-0">' . $item['single_bed'] . ' single bed <img width="16px" class="bed" src="image/single-bed.png" /> ,' . $item['double_bed'] . ' double bed <img width="16px" class="bed" src="image/double-bed.jpg" /></div>
                                         <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="" class="stretched-link">Learn more</a>
+                                        <a href="/room_detail.php" class="stretched-link">Learn more</a>
                                     </div>
                                     ';
                     if ($item['available'] > 0) {
