@@ -2,15 +2,13 @@
 $con = mysqli_connect('localhost', 'root', '', 'royal_side');
 $request = $_REQUEST;
 $col = array(
-    0 => 'user_id',
-    1 => 'name',
-    2 => 'phone_number',
-    3 => 'gender',
-    4 => 'address',
-    5 => 'identify_number',
+    0 => 'booking_ID',
+    1 => 'category_ID',
+    2 => 'quantity',
+    3 => 'price_on_day',
 );
 
-$sql = "SELECT * FROM profile";
+$sql = "SELECT * FROM booking_detail";
 $query = mysqli_query($con, $sql);
 $totalData = mysqli_num_rows($query);
 $totalFilter = $totalData;
@@ -18,12 +16,10 @@ $data = array();
 
 while ($row = mysqli_fetch_array($query)) {
     $subdata = array();
-    $subdata['user_id'] = $row[0];
-    $subdata['name'] = $row[1];
-    $subdata['phone_number'] = $row[2];
-    $subdata['gender'] = $row[3];
-    $subdata['address'] = $row[4];
-    $subdata['identify_number'] = $row[5];
+    $subdata['booking_ID'] = $row[0];
+    $subdata['category_ID'] = $row[1];
+    $subdata['quantity'] = $row[2];
+    $subdata['price_on_day'] = $row[3];
     $data[] = $subdata;
 }
 

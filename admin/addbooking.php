@@ -8,8 +8,8 @@ require_once "../backend/dbService.php";
 //var_dump($_POST['ngay1']);
 
 if (isset(
-    $_POST['booking_ID'],
-    $_POST['username'],
+    //$_POST['booking_ID'],
+    $_POST['user_id'],
     $_POST['adult'],
     $_POST['children'],
     $_POST['total_pay']
@@ -20,21 +20,31 @@ if (isset(
     // var_dump($_POST);
     // die();
 
+    $kq = false;
     $DB = new DbServices();
-    $result = $DB->create(
-        'booking',
-        [
-            'booking_ID' => $_POST['booking_ID'],
-            'username' => $_POST['username'],
-            'adult' => $_POST['adult'],
-            'children' => $_POST['children'],
-            'check_in' => date("Y-m-d", strtotime($_POST['ngay1'])),
-            'check_out' => date("Y-m-d", strtotime($_POST['ngay2'])),
-            'total_pay' => $_POST['total_pay']
-        ]
 
-    );
-    $resultAdd = json_encode($result);
+    try {
+        $result = $DB->create(
+            'booking',
+            [
+                // 'booking_ID' => "6097b072ba7b2",
+                // 'booking_ID' => $_POST['booking_ID'],
+                'booking_ID' => uniqid(),
+                'user_id' => $_POST['user_id'],
+                'adult' => $_POST['adult'],
+                'children' => $_POST['children'],
+                'check_in' => date("Y-m-d", strtotime($_POST['ngay1'])),
+                'check_out' => date("Y-m-d", strtotime($_POST['ngay2'])),
+                'total_pay' => $_POST['total_pay']
+            ]
+
+        );
+        if ($result)
+            $kq = true;
+    } catch (Exception $e) {
+    }
+
+    $resultAdd = json_encode($kq);
 };
 
 ?>
@@ -53,18 +63,6 @@ if (isset(
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
             </button>
-
-            <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -246,9 +244,12 @@ if (isset(
                     <h6 class="m-0 font-weight-bold text-primary">Add Booking</h6>
                 </div>
 
-                <?php if (isset($resultAdd)) echo '
-                     <div class="alert alert-info" role="alert">' . $resultAdd . ' </div>'
-
+                <?php if (isset($resultAdd)) {
+                    if ($kq == true)
+                        echo '<div class="alert alert-info" role="alert">' . $resultAdd . ' </div>';
+                    else
+                        echo '<div class="alert alert-danger" role="alert">' . $resultAdd . ' </div>';
+                }
                 ?>
 
                 <div class="card-body">
@@ -257,18 +258,20 @@ if (isset(
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <form action="./addbooking.php" method="POST">
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <input type="text" name="booking_ID" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID'" placeholder="ID" aria-label="ID" required aria-describedby="basic-addon1">
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="username">
+                                    <select class="form-control" id="exampleFormControlSelect1" name="user_id">
                                         <option value="" selected disabled>Username</option>
                                         <?php
                                         $DB =  new DbServices();
-                                        $roomType = $DB->getAll('account');
-                                        foreach ($roomType as $item) {
-                                            echo '<option  value="' . $item['username'] . '">' . $item['username'] . '</option>';
+                                        $sql = "SELECT * FROM account WHERE account_category='customer'";
+                                        if ($roomType =  $DB->execute1($sql)) {
+                                            foreach ($roomType as $item) {
+                                                echo '<option  value="' . $item['user_id'] . '">' . $item['username'] . '</option>';
+                                            }
                                         }
                                         ?>
                                     </select>
@@ -276,6 +279,10 @@ if (isset(
 
                                 <div class="form-group">
                                     <input type="text" name="adult" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Adult'" placeholder="Adult" aria-label="Adult" required aria-describedby="basic-addon1">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="children" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Children'" placeholder="Children" aria-label="Children" required aria-describedby="basic-addon1">
                                 </div>
 
                                 <div class="form-group">
@@ -296,10 +303,6 @@ if (isset(
                                             <i class="fa fa-calendar"></i>
                                         </span>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="children" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Children'" placeholder="Children" aria-label="Children" required aria-describedby="basic-addon1">
                                 </div>
 
                                 <div class="form-group">

@@ -1,16 +1,20 @@
 <?php
-$con = mysqli_connect('localhost', 'root', '', 'royal_side');
-$request = $_POST;
 
 
-if (isset($_POST['room_number'], $_POST['category_ID'])) {
-    return json_encode(['errors' => 'ID is required']);
-} else {
+require_once "../../backend/dbService.php";
 
-    $sql = "DELETE FROM room WHERE room.room_number =" . $request['room_number'] . " AND room.category_ID =" . $request['category_ID'];
-    if (mysqli_query($con, $sql)) {
-        echo "Record deleted successfully";
-    } else {
-        echo "Error deleting record: " . mysqli_error($conn);
+if (isset($_POST['category_ID'], $_POST['room_number'])) {
+    $DB = new DbServices();
+    $sql = "DELETE FROM room WHERE room_number = " . $_POST['room_number'] . " AND category_ID = '" . $_POST['category_ID'] . "'";
+    try {
+        $result =  $DB->rowEffect($sql);
+
+        if ($result) {
+            echo "Deleted Successfully";
+        } else {
+            echo "Delete Error";
+        }
+    } catch (Exception $e) {
+        echo "Delete Error";
     }
 }

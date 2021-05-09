@@ -4,42 +4,17 @@ include('includes/header.php');
 include('includes/navbar.php');
 
 require_once "../backend/dbService.php";
-
-
-if (isset(
-    $_POST['username'],
-    $_POST['email'],
-    $_POST['password'],
-    $_POST['account_category']
-)) {
-
-    // var_dump($_POST);
-    // die();
-    $kq = false;
-    $DB = new DbServices();
-
-    try {
-        $result = $DB->create(
-            'account',
-            [
-                'user_id'           => uniqid(),
-                'username'          => $_POST['username'],
-                'email'             => $_POST['email'],
-                'password'          => sha1($_POST['password']),
-                'account_category'  => $_POST['account_category'],
-            ]
-
-        );
-        if ($result)
-            $kq = true;
-    } catch (Exception $e) {
-    }
-
-
-    $resultAdd = json_encode($kq);
-};
+$DB = new DbServices();
 
 ?>
+
+<!-- Custom styles for this page -->
+<script src="vendor/jquery/jquery.min.js"></script>
+
+<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -226,64 +201,203 @@ if (isset(
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Account</h1>
+            <h1 class="h3 mb-2 text-gray-800">All Booking</h1>
 
+            <div class="alert" role="alert" id="notification">
+            </div>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Add Account</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Booking</h6>
                 </div>
-
-                <?php if (isset($resultAdd)) {
-                    if ($kq == true)
-                        echo '<div class="alert alert-info" role="alert">' . $resultAdd . ' </div>';
-                    else
-                        echo '<div class="alert alert-danger" role="alert">' . $resultAdd . ' </div>';
-                }
-                ?>
-
+                <div class="alert" role="alert" id="notification">
+                </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3">
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <form action="./addaccount.php" method="POST">
+                    <div class="table-responsive">
+                        <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Room Type</th>
+                                    <th>Quantity</th>
+                                    <th>Price On Day</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-                                <div class="form-group">
-                                    <select class="form-control" name="account_category">
-                                        <option value="" selected disabled>Account Type</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="customer">Customer</option>
-                                    </select>
-                                </div>
+        </div>
+        <!-- /.container-fluid -->
 
-                                <div class="form-group">
-                                    <input type="text" name="username" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" placeholder="Username" aria-label="Username" required aria-describedby="basic-addon1">
-                                </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modelEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="./edit.php" method="POST" id="formEdit">
 
-                                <div class="form-group">
-                                    <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" placeholder="Email" aria-label="Email" required aria-describedby="basic-addon1">
-                                </div>
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect1" name="booking_ID">
+                                    <option value="" selected disabled>Booking ID</option>
+                                    <?php
+                                    $DB =  new DbServices();
+                                    $sql = "SELECT * FROM booking";
+                                    if ($roomType =  $DB->execute1($sql)) {
+                                        foreach ($roomType as $item) {
+                                            echo '<option  value="' . $item['booking_ID'] . '">' . $item['booking_ID'] . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
-                                <div class="form-group">
-                                    <input type="password" name="password" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" placeholder="Password" aria-label="Password" required aria-describedby="basic-addon1">
-                                </div>
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect1" name="category_ID">
+                                    <option value="" selected disabled>Room Type</option>
+                                    <?php
+                                    $DB =  new DbServices();
+                                    $sql = "SELECT * FROM room_category";
+                                    if ($roomType =  $DB->execute1($sql)) {
+                                        foreach ($roomType as $item) {
+                                            echo '<option  value="' . $item['category_ID'] . '">' . $item['category_name'] . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
-                                <div class="mt-30 row justify-content-center">
-                                    <input id="comfirm-add-btn" type="submit" name="submit" value="Add" class="w-25 genric-btn danger radius" />
-                                </div>
-                            </form>
-                        </div>
+                            <div class="form-group">
+                                <input type="text" name="quantity" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Quantity'" placeholder="Quantity" aria-label="Double Bed" required aria-describedby="basic-addon1">
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
-    <!-- /.container-fluid -->
+        <script>
+            var editor;
 
+            $(document).ready(function() {
+                editor = new $.fn.dataTable.Editor({
+                    "ajax": {
+                        url: "booking/fetch.php",
+                        type: "post",
+                        // success: (data) => {console.log(data)}
+                    },
+                    "table": "#dataTable",
+                    "fields": [{
+                        "label": "Booking ID:",
+                        "name": "booking_ID"
+                    }, {
+                        "label": "Room Type:",
+                        "name": "category_ID"
+                    }, {
+                        "label": "Quantity:",
+                        "name": "quantity"
+                    }, {
+                        "label": "Price On Day:",
+                        "name": "price_on_day"
+                    }, ]
+                });
+            })
 
+            $(document).ready(function() {
+                var dataTable = $('#dataTable').dataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        url: "bookingdetails/fetch.php",
+                        type: "post",
+                        // success: (data) => {console.log(data)}
+                    },
 
-    <?php include('includes/scripts.php'); ?>
-    <?php include('includes/footer.php'); ?>
+                    columns: [{
+                            data: "booking_ID"
+                        },
+                        {
+                            data: "category_ID"
+                        },
+                        {
+                            data: "quantity"
+                        },
+                        {
+                            data: "price_on_day"
+                        },
+                        {
+                            data: null,
+                            className: "dt-center editor-edit",
+                            defaultContent: '<button class="btn btn-warning" data-toggle="modal" data-target="#modelEdit"><i class="fa fa-wrench" /> </button>',
+                            orderable: false
+                        },
+                        {
+                            data: null,
+                            className: "dt-center editor-delete",
+                            defaultContent: '<button class="btn btn-danger"><i class="fa fa-trash" /> </button>',
+                            orderable: false
+                        }
+                    ]
+                });
+            });
+        </script>
+
+        <script>
+            // Edit record
+            $('#dataTable').on('click', 'td.editor-edit', function(e) {
+                e.preventDefault();
+                var inputs = $('#formEdit input')
+                for (let i = 0; i < inputs.length; i++) {
+                    try {
+                        inputs[i].value = $(this).parents('tr')[0].childNodes[i + 2].firstChild.nodeValue
+                    } catch (e) {
+                        inputs[i].value = ''
+                    }
+                }
+            });
+            // Delete a record
+            $('#dataTable').on('click', 'td.editor-delete', function(e) {
+                e.preventDefault();
+                var id = $(this).parents('tr')[0].childNodes[0].firstChild.nodeValue
+                var self = this
+
+                $.ajax({
+                    url: "./bookingdetails/delete.php",
+                    method: "POST",
+                    data: {
+                        "booking_id": id
+                    },
+                    success: function(result) {
+                        $("#notification").html(result);
+                        if (result == "Deleted Successfully") {
+                            $(self).parents('tr').remove()
+                            $("#notification").attr('class', 'alert alert-success');
+                        } else {
+                            $("#notification").attr('class', 'alert alert-danger');
+                        }
+                    },
+                    fail: function() {
+                        $("#notification").html("Problem");
+                    }
+                });
+
+            });
+        </script>
+        <?php include('includes/scripts.php'); ?>
+        <?php include('includes/footer.php'); ?>

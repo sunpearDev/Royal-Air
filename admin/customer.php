@@ -3,9 +3,6 @@
 include('includes/header.php');
 include('includes/navbar.php');
 
-require_once "../backend/dbService.php";
-$DB = new DbServices();
-
 ?>
 
 <!-- Custom styles for this page -->
@@ -30,18 +27,6 @@ $DB = new DbServices();
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
             </button>
-
-            <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -215,7 +200,7 @@ $DB = new DbServices();
 
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">All Customer</h1>
-            <div class="alert alert-success" role="alert" id="notification">
+            <div class="alert" role="alert" id="notification">
             </div>
 
             <!-- DataTales Example -->
@@ -228,7 +213,7 @@ $DB = new DbServices();
                         <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Username</th>
+                                    <th>User ID</th>
                                     <th>Name</th>
                                     <th>Phone Number</th>
                                     <th>Gender</th>
@@ -246,6 +231,54 @@ $DB = new DbServices();
         </div>
         <!-- /.container-fluid -->
 
+        <!-- Modal -->
+        <div class="modal fade" id="modelEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="./edit.php" method="POST" id="formEdit">
+
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Name" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="phone_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" placeholder="Phone Number" aria-label="Phone Number" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <select class="form-control" name="gender">
+                                    <option value="" selected disabled>Gender</option>
+                                    <option value="1">Male</option>
+                                    <option value="0">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="address" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" placeholder="Address" aria-label="Address" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="identify_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Identify Number'" placeholder="Identify Number" aria-label="Identify Number" required aria-describedby="basic-addon1">
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script>
             var editor;
 
@@ -258,8 +291,8 @@ $DB = new DbServices();
                     },
                     "table": "#dataTable",
                     "fields": [{
-                        "label": "Username:",
-                        "name": "username"
+                        "label": "User ID:",
+                        "name": "user_id"
                     }, {
                         "label": "Name:",
                         "name": "name"
@@ -290,7 +323,7 @@ $DB = new DbServices();
                     },
 
                     columns: [{
-                            data: "username"
+                            data: "user_id"
                         },
                         {
                             data: "name"
@@ -310,7 +343,7 @@ $DB = new DbServices();
                         {
                             data: null,
                             className: "dt-center editor-edit",
-                            defaultContent: '<button class="btn btn-warning"><i class="fa fa-wrench" /> </button>',
+                            defaultContent: '<button class="btn btn-warning" data-toggle="modal" data-target="#modelEdit"><i class="fa fa-wrench" /> </button>',
                             orderable: false
                         },
                         {
@@ -328,12 +361,18 @@ $DB = new DbServices();
             // Edit record
             $('#dataTable').on('click', 'td.editor-edit', function(e) {
                 e.preventDefault();
-
-                // editor.edit($(this).closest('tr'), {
-                //     title: 'Edit record',
-                //     buttons: 'Update'
-                // });
-                alert("edit")
+                var inputs = $('#formEdit input')
+                for (let i = 0; i < inputs.length; i++) {
+                    try {
+                        if (i < 2) {
+                            inputs[i].value = $(this).parents('tr')[0].childNodes[i + 1].firstChild.nodeValue
+                        } else {
+                            inputs[i].value = $(this).parents('tr')[0].childNodes[i + 2].firstChild.nodeValue
+                        }
+                    } catch (e) {
+                        inputs[i].value = ''
+                    }
+                }
             });
             // Delete a record
             $('#dataTable').on('click', 'td.editor-delete', function(e) {
@@ -345,12 +384,17 @@ $DB = new DbServices();
                     url: "./customers/delete.php",
                     method: "POST",
                     data: {
-                        "username": id
+                        "user_id": id
                     },
                     success: function(result) {
-                        console.log(result)
+                        //console.log(result)
                         $("#notification").html(result);
-                        $(self).parents('tr').remove();
+                        if (result == "Deleted Successfully") {
+                            $(self).parents('tr').remove()
+                            $("#notification").attr('class', 'alert alert-success');
+                        } else {
+                            $("#notification").attr('class', 'alert alert-danger');
+                        }
                     },
                     fail: function() {
                         $("#notification").html("Problem");

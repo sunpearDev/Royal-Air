@@ -27,17 +27,6 @@ include('includes/navbar.php');
                 <i class="fa fa-bars"></i>
             </button>
 
-            <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -218,6 +207,8 @@ include('includes/navbar.php');
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Accounts</h6>
                 </div>
+                <div class="alert" role="alert" id="notification">
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -239,6 +230,49 @@ include('includes/navbar.php');
 
         </div>
         <!-- /.container-fluid -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="modelEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="./edit.php" method="POST" id="formEdit">
+
+                            <div class="form-group">
+                                <select class="form-control" name="account_category">
+                                    <option value="" selected disabled>Account Type</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="customer">Customer</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="username" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" placeholder="Username" aria-label="Username" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" placeholder="Email" aria-label="Email" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" placeholder="Password" aria-label="Password" required aria-describedby="basic-addon1">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script>
             var editor;
@@ -298,7 +332,7 @@ include('includes/navbar.php');
                         {
                             data: null,
                             className: "dt-center editor-edit",
-                            defaultContent: '<button class="btn btn-warning"><i class="fa fa-wrench" /> </button>',
+                            defaultContent: '<button class="btn btn-warning" data-toggle="modal" data-target="#modelEdit"><i class="fa fa-wrench" /> </button>',
                             orderable: false
                         },
                         {
@@ -316,23 +350,42 @@ include('includes/navbar.php');
             // Edit record
             $('#dataTable').on('click', 'td.editor-edit', function(e) {
                 e.preventDefault();
-
-                // editor.edit($(this).closest('tr'), {
-                //     title: 'Edit record',
-                //     buttons: 'Update'
-                // });
-                alert("edit")
+                var inputs = $('#formEdit input')
+                for (let i = 0; i < inputs.length; i++) {
+                    try {
+                        inputs[i].value = $(this).parents('tr')[0].childNodes[i + 1].firstChild.nodeValue
+                    } catch (e) {
+                        inputs[i].value = ''
+                    }
+                }
             });
             // Delete a record
             $('#dataTable').on('click', 'td.editor-delete', function(e) {
                 e.preventDefault();
+                var id = $(this).parents('tr')[0].childNodes[0].firstChild.nodeValue
+                var self = this
 
-                // editor.remove($(this).closest('tr'), {
-                //     title: 'Delete record',
-                //     message: 'Are you sure you wish to remove this record?',
-                //     buttons: 'Delete'
-                // });
-                alert("delete")
+                $.ajax({
+                    url: "./accounts/delete.php",
+                    method: "POST",
+                    data: {
+                        "user_id": id
+                    },
+                    success: function(result) {
+                        //console.log(result)
+                        $("#notification").html(result);
+                        if (result == "Deleted Successfully") {
+                            $(self).parents('tr').remove()
+                            $("#notification").attr('class', 'alert alert-success');
+                        } else {
+                            $("#notification").attr('class', 'alert alert-danger');
+                        }
+                    },
+                    fail: function() {
+                        $("#notification").html("Problem");
+                    }
+                });
+
             });
         </script>
 

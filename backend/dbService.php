@@ -38,6 +38,39 @@ class DbServices
             die();
         }
     }
+	
+		public function rowEffect($sql, $data = [], $fetchMode = PDO::FETCH_ASSOC)
+    {
+        if ($this->connection == null) {
+            die("Can't connect database.");
+        }
+        $stm = $this->connection->prepare($sql);
+
+        if ($stm->execute($data)) {
+            return $stm->rowCount();
+        } else {
+            print_r($stm->errorInfo());
+            die();
+        }
+    }
+	
+    public function execute1($sql, $data = [], $fetchMode = PDO::FETCH_ASSOC)
+    {
+        if ($this->connection == null) {
+            die("Can't connect database.");
+        }
+        $stm = $this->connection->prepare($sql);
+
+
+
+        if ($stm->execute($data)) {
+            return $stm->fetchAll();
+        } else {
+            print_r($stm->errorInfo());
+            die();
+        }
+    }
+	
     function beginTransaction()
     {
         $this->connection->beginTransaction();

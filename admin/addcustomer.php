@@ -7,7 +7,7 @@ require_once "../backend/dbService.php";
 
 
 if (isset(
-    $_POST['username'],
+    $_POST['user_id'],
     $_POST['name'],
     $_POST['phone_number'],
     $_POST['gender'],
@@ -17,21 +17,28 @@ if (isset(
 
     //var_dump($_POST);
     //die();
-
+    $kq = false;
     $DB = new DbServices();
-    $result = $DB->create(
-        'profile',
-        [
-            'username'          => $_POST['username'],
-            'name'              => $_POST['name'],
-            'phone_number'      => $_POST['phone_number'],
-            'gender'            => $_POST['gender'],
-            'address'           => $_POST['address'],
-            'identify_number'   => $_POST['identify_number'],
-        ]
 
-    );
-    $resultAdd = json_encode($result);
+    try {
+        $result = $DB->create(
+            'profile',
+            [
+                'user_id'           => $_POST['user_id'],
+                'name'              => $_POST['name'],
+                'phone_number'      => $_POST['phone_number'],
+                'gender'            => $_POST['gender'],
+                'address'           => $_POST['address'],
+                'identify_number'   => $_POST['identify_number'],
+            ]
+
+        );
+        if ($result)
+            $kq = true;
+    } catch (Exception $e) {
+    }
+
+    $resultAdd = json_encode($kq);
 };
 
 ?>
@@ -49,18 +56,6 @@ if (isset(
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
             </button>
-
-            <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -242,9 +237,12 @@ if (isset(
                     <h6 class="m-0 font-weight-bold text-primary">Add Customer</h6>
                 </div>
 
-                <?php if (isset($resultAdd)) echo '
-                     <div class="alert alert-info" role="alert">' . $resultAdd . ' </div>'
-
+                <?php if (isset($resultAdd)) {
+                    if ($kq == true)
+                        echo '<div class="alert alert-info" role="alert">' . $resultAdd . ' </div>';
+                    else
+                        echo '<div class="alert alert-danger" role="alert">' . $resultAdd . ' </div>';
+                }
                 ?>
 
                 <div class="card-body">
@@ -255,13 +253,15 @@ if (isset(
                             <form action="./addcustomer.php" method="POST">
 
                                 <div class="form-group">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="username">
+                                    <select class="form-control" id="exampleFormControlSelect1" name="user_id">
                                         <option value="" selected disabled>Username</option>
                                         <?php
                                         $DB =  new DbServices();
                                         $roomType = $DB->getAll('account');
                                         foreach ($roomType as $item) {
-                                            echo '<option  value="' . $item['username'] . '">' . $item['username'] . '</option>';
+                                            if ($item['account_category'] === "customer") {
+                                                echo '<option  value="' . $item['user_id'] . '">' . $item['username'] . '</option>';
+                                            }
                                         }
                                         ?>
                                     </select>

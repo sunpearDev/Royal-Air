@@ -1,11 +1,11 @@
 <?php
-
 require_once "../../backend/dbService.php";
 
-if (isset($_POST['booking_id'])) {
+if (isset($_POST['category_ID'])) {
     $DB = new DbServices();
+    $sql = "delete from room_category where category_ID  = '" . $_POST['category_ID'] . "'";
     try {
-        $result =  $DB->delete('booking', ['name' => 'booking_id', 'value' => "'" . $_POST['booking_id'] . "'"]);
+        $result =  $DB->delete('room_category', ['name' => 'category_ID', 'value' => "'" . $_POST['category_ID'] . "'"]);
 
         if ($result) {
             echo "Deleted Successfully";

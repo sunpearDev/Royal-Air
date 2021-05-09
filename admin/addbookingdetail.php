@@ -5,28 +5,33 @@ include('includes/navbar.php');
 
 require_once "../backend/dbService.php";
 
-
 if (isset(
-    $_POST['username'],
-    $_POST['email'],
-    $_POST['password'],
-    $_POST['account_category']
+    $_POST['booking_ID'],
+    $_POST['category_ID'],
+    $_POST['quantity'],
 )) {
+
 
     // var_dump($_POST);
     // die();
+
     $kq = false;
     $DB = new DbServices();
 
     try {
+        $sql = "SELECT * FROM room_category WHERE category_ID = '" . $_POST['category_ID'] . "'";
+        if ($roomType =  $DB->execute1($sql)) {
+            foreach ($roomType as $item) {
+                $price_on_day = $item['price_on_day'];
+            }
+        }
         $result = $DB->create(
-            'account',
+            'booking_detail',
             [
-                'user_id'           => uniqid(),
-                'username'          => $_POST['username'],
-                'email'             => $_POST['email'],
-                'password'          => sha1($_POST['password']),
-                'account_category'  => $_POST['account_category'],
+                'booking_ID' => $_POST['booking_ID'],
+                'category_ID' => $_POST['category_ID'],
+                'quantity' => $_POST['quantity'],
+                'price_on_day' => $price_on_day,
             ]
 
         );
@@ -34,7 +39,6 @@ if (isset(
             $kq = true;
     } catch (Exception $e) {
     }
-
 
     $resultAdd = json_encode($kq);
 };
@@ -226,13 +230,13 @@ if (isset(
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Account</h1>
+            <h1 class="h3 mb-2 text-gray-800">Room Type</h1>
 
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Add Account</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Add Room Type</h6>
                 </div>
 
                 <?php if (isset($resultAdd)) {
@@ -248,26 +252,41 @@ if (isset(
                         <div class="col-lg-3 col-md-3">
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <form action="./addaccount.php" method="POST">
+                            <form action="./addbookingdetail.php" method="POST">
+
 
                                 <div class="form-group">
-                                    <select class="form-control" name="account_category">
-                                        <option value="" selected disabled>Account Type</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="customer">Customer</option>
+                                    <select class="form-control" id="exampleFormControlSelect1" name="booking_ID">
+                                        <option value="" selected disabled>Booking ID</option>
+                                        <?php
+                                        $DB =  new DbServices();
+                                        $sql = "SELECT * FROM booking";
+                                        if ($roomType =  $DB->execute1($sql)) {
+                                            foreach ($roomType as $item) {
+                                                echo '<option  value="' . $item['booking_ID'] . '">' . $item['booking_ID'] . '</option>';
+                                            }
+                                        }
+                                        ?>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="text" name="username" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" placeholder="Username" aria-label="Username" required aria-describedby="basic-addon1">
+                                    <select class="form-control" id="exampleFormControlSelect1" name="category_ID">
+                                        <option value="" selected disabled>Room Type</option>
+                                        <?php
+                                        $DB =  new DbServices();
+                                        $sql = "SELECT * FROM room_category";
+                                        if ($roomType =  $DB->execute1($sql)) {
+                                            foreach ($roomType as $item) {
+                                                echo '<option  value="' . $item['category_ID'] . '">' . $item['category_name'] . '</option>';
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" placeholder="Email" aria-label="Email" required aria-describedby="basic-addon1">
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="password" name="password" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" placeholder="Password" aria-label="Password" required aria-describedby="basic-addon1">
+                                    <input type="text" name="quantity" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Quantity'" placeholder="Quantity" aria-label="Double Bed" required aria-describedby="basic-addon1">
                                 </div>
 
                                 <div class="mt-30 row justify-content-center">

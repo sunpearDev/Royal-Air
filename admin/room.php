@@ -26,17 +26,6 @@ include('includes/navbar.php');
                 <i class="fa fa-bars"></i>
             </button>
 
-            <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -217,8 +206,7 @@ include('includes/navbar.php');
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Rooms</h6>
                 </div>
-                <div class="alert alert-success" role="alert">
-                    Alert Here!
+                <div class="alert" role="alert" id="notification">
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -315,13 +303,32 @@ include('includes/navbar.php');
             // Delete a record
             $('#dataTable').on('click', 'td.editor-delete', function(e) {
                 e.preventDefault();
+                var idCategory = $(this).parents('tr')[0].childNodes[1].firstChild.nodeValue
+                var id = $(this).parents('tr')[0].childNodes[0].firstChild.nodeValue
+
+                var self = this
 
                 $.ajax({
-                    url: "./rooms/delete",
+                    url: "./rooms/delete.php",
+                    method: "POST",
+                    data: {
+                        "category_ID": idCategory,
+                        "room_number": id,
+                    },
                     success: function(result) {
-
+                        $("#notification").html(result);
+                        if (result == "Deleted Successfully") {
+                            $(self).parents('tr').remove()
+                            $("#notification").attr('class', 'alert alert-success');
+                        } else {
+                            $("#notification").attr('class', 'alert alert-danger');
+                        }
+                    },
+                    fail: function() {
+                        $("#notification").html("Problem");
                     }
                 });
+
             });
         </script>
 

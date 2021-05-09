@@ -30,18 +30,6 @@ $DB = new DbServices();
                 <i class="fa fa-bars"></i>
             </button>
 
-            <!-- Topbar Search -->
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
 
@@ -215,7 +203,7 @@ $DB = new DbServices();
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">All Booking</h1>
 
-            <div class="alert alert-success" role="alert" id="notification">
+            <div class="alert" role="alert" id="notification">
             </div>
 
             <!-- DataTales Example -->
@@ -246,6 +234,76 @@ $DB = new DbServices();
 
         </div>
         <!-- /.container-fluid -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="modelEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="./addbooking.php" method="POST" id="formEdit">
+
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect1" name="user_id">
+                                    <option value="" selected disabled>Username</option>
+                                    <?php
+                                    $DB =  new DbServices();
+                                    $sql = "SELECT * FROM account WHERE account_category='customer'";
+                                    if ($roomType =  $DB->execute1($sql)) {
+                                        foreach ($roomType as $item) {
+                                            echo '<option  value="' . $item['user_id'] . '">' . $item['username'] . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="adult" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Adult'" placeholder="Adult" aria-label="Adult" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="children" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Children'" placeholder="Children" aria-label="Children" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Check-in: </label>
+                                <div id="datepicker" class="input-group date " data-date-format="dd-mm-yyyy">
+                                    <input name="ngay1" class="form-control" readonly="" type="text">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Check-out: </label>
+                                <div id="datepicker2" class="input-group date " data-date-format="dd-mm-yyyy">
+                                    <input name="ngay2" class="form-control" readonly="" type="text">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" name="total_pay" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Total Pay'" placeholder="Total Pay" aria-label="Total Pay" required aria-describedby="basic-addon1">
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script>
             var editor;
@@ -317,7 +375,7 @@ $DB = new DbServices();
                         {
                             data: null,
                             className: "dt-center editor-edit",
-                            defaultContent: '<button class="btn btn-warning"><i class="fa fa-wrench" /> </button>',
+                            defaultContent: '<button class="btn btn-warning" data-toggle="modal" data-target="#modelEdit"><i class="fa fa-wrench" /> </button>',
                             orderable: false
                         },
                         {
@@ -335,13 +393,16 @@ $DB = new DbServices();
             // Edit record
             $('#dataTable').on('click', 'td.editor-edit', function(e) {
                 e.preventDefault();
-
-                // editor.edit($(this).closest('tr'), {
-                //     title: 'Edit record',
-                //     buttons: 'Update'
-                // });
-                alert("edit")
+                var inputs = $('#formEdit input')
+                for (let i = 0; i < inputs.length; i++) {
+                    try {
+                        inputs[i].value = $(this).parents('tr')[0].childNodes[i + 2].firstChild.nodeValue
+                    } catch (e) {
+                        inputs[i].value = ''
+                    }
+                }
             });
+
             // Delete a record
             $('#dataTable').on('click', 'td.editor-delete', function(e) {
                 e.preventDefault();
@@ -355,15 +416,45 @@ $DB = new DbServices();
                         "booking_id": id
                     },
                     success: function(result) {
-                        console.log(result)
                         $("#notification").html(result);
-                        $(self).parents('tr').remove();
+                        if (result == "Deleted Successfully") {
+                            $(self).parents('tr').remove()
+                            $("#notification").attr('class', 'alert alert-success');
+                        } else {
+                            $("#notification").attr('class', 'alert alert-danger');
+                        }
                     },
                     fail: function() {
                         $("#notification").html("Problem");
                     }
                 });
 
+            });
+        </script>
+
+        <style>
+            #datepicker>span:hover {
+                cursor: pointer;
+            }
+
+            #datepicker2>span:hover {
+                cursor: pointer;
+            }
+        </style>
+
+        <link rel="stylesheet prefetch" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
+        <script type="text/javascript">
+            $(function() {
+                $("#datepicker").datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                }).datepicker('update', new Date());
+                $("#datepicker2 ").datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                }).datepicker('update', new Date());
             });
         </script>
         <?php include('includes/scripts.php'); ?>
