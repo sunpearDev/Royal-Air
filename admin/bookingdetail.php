@@ -4,7 +4,48 @@ include('includes/header.php');
 include('includes/navbar.php');
 
 require_once "../backend/dbService.php";
-$DB = new DbServices();
+
+
+if (isset(
+    $_POST['category_ID'],
+    $_POST['quantity'],
+    $_POST['booking_ID'],
+    $_POST['booking_ID1'],
+)) {
+
+    $DB = new DbServices();
+    $sql = "SELECT * FROM room_category WHERE category_ID = '" . $_POST['category_ID'] . "'";
+    if ($roomType =  $DB->execute1($sql)) {
+        foreach ($roomType as $item) {
+            $price_on_day = $item['price_on_day'];
+        }
+    }
+
+    $kq = false;
+    $resultEdit = "";
+    $sql = "update booking_detail set ";
+    $sql .= "category_ID = '" . $_POST['category_ID'] . "'";
+    $sql .= ",booking_ID = '" . $_POST['booking_ID'] . "'";
+    $sql .= ",price_on_day = " . $price_on_day;
+    $sql .= ",quantity = " . $_POST['quantity'];
+
+    $sql .= " where booking_ID = '" . $_POST['booking_ID1'] . "'";
+
+
+    try {
+        $result = $DB->rowEffect($sql);
+        if ($result) {
+            $kq = true;
+            $resultEdit = "Success!";
+        } else {
+            $kq = false;
+            $resultEdit = "Error!";
+        }
+    } catch (Exception $e) {
+        $kq = false;
+        $resultEdit = "Error!";
+    }
+};
 
 ?>
 
@@ -167,7 +208,7 @@ $DB = new DbServices();
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr.Hieu</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -205,6 +246,12 @@ $DB = new DbServices();
 
             <div class="alert" role="alert" id="notification">
             </div>
+            <?php if (isset($resultEdit)) { ?>
+                <div class="alert <?php if ($kq)  echo ('alert-success');
+                                    else echo 'alert-danger' ?>" role="alert">
+                    <?php echo $resultEdit ?>
+                </div>
+            <?php } ?>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -245,8 +292,9 @@ $DB = new DbServices();
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="./edit.php" method="POST" id="formEdit">
+                        <form action="./bookingdetail.php" method="POST" id="formEdit">
 
+                            <input type="text" hidden name="booking_ID1">
                             <div class="form-group">
                                 <select class="form-control" id="exampleFormControlSelect1" name="booking_ID">
                                     <option value="" selected disabled>Booking ID</option>
@@ -270,7 +318,7 @@ $DB = new DbServices();
                                     $sql = "SELECT * FROM room_category";
                                     if ($roomType =  $DB->execute1($sql)) {
                                         foreach ($roomType as $item) {
-                                            echo '<option  value="' . $item['category_ID'] . '">' . $item['category_name'] . '</option>';
+                                            echo '<option  value="' . $item['category_ID'] . '">' . $item['category_name'] .  " - " . $item['category_ID'] . '</option>';
                                         }
                                     }
                                     ?>
@@ -281,13 +329,13 @@ $DB = new DbServices();
                                 <input type="text" name="quantity" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Quantity'" placeholder="Quantity" aria-label="Double Bed" required aria-describedby="basic-addon1">
                             </div>
 
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -363,13 +411,15 @@ $DB = new DbServices();
             $('#dataTable').on('click', 'td.editor-edit', function(e) {
                 e.preventDefault();
                 var inputs = $('#formEdit input')
-                for (let i = 0; i < inputs.length; i++) {
-                    try {
-                        inputs[i].value = $(this).parents('tr')[0].childNodes[i + 2].firstChild.nodeValue
-                    } catch (e) {
-                        inputs[i].value = ''
-                    }
-                }
+                inputs[0].value = $(this).parents('tr')[0].childNodes[0].firstChild.nodeValue
+                inputs[1].value = $(this).parents('tr')[0].childNodes[2].firstChild.nodeValue
+                // for (let i = 0; i < inputs.length; i++) {
+                //     try {
+                //         inputs[i].value = $(this).parents('tr')[0].childNodes[i + 2].firstChild.nodeValue
+                //     } catch (e) {
+                //         inputs[i].value = ''
+                //     }
+                // }
             });
             // Delete a record
             $('#dataTable').on('click', 'td.editor-delete', function(e) {

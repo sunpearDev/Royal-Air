@@ -3,6 +3,49 @@
 include('includes/header.php');
 include('includes/navbar.php');
 
+
+require_once "../backend/dbService.php";
+
+if (isset(
+    $_POST['user_id'],
+    $_POST['user_id1'],
+    $_POST['name'],
+    $_POST['phone_number'],
+    $_POST['gender'],
+    $_POST['address'],
+    $_POST['identify_number'],
+)) {
+
+
+
+    $kq = false;
+    $resultEdit = "";
+    $DB = new DbServices();
+    $sql = "update profile set ";
+    $sql .= "user_id = '" . $_POST['user_id'] . "'";
+    $sql .= ",name = '" . $_POST['name'] . "'";
+    $sql .= ",phone_number = '" . $_POST['phone_number'] . "'";
+    $sql .= ",gender = " . $_POST['gender'];
+    $sql .= ",address = '" . $_POST['address'] . "'";
+    $sql .= ",identify_number = '" . $_POST['identify_number'] . "'";
+    $sql .= " where user_id = '" . $_POST['user_id1'] . "'";
+
+
+    try {
+        $result = $DB->rowEffect($sql);
+        if ($result) {
+            $kq = true;
+            $resultEdit = "Success!";
+        } else {
+            $kq = false;
+            $resultEdit = "Error!";
+        }
+    } catch (Exception $e) {
+        $kq = false;
+        $resultEdit = "Error!";
+    }
+};
+
 ?>
 
 <!-- Custom styles for this page -->
@@ -165,7 +208,7 @@ include('includes/navbar.php');
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr.Hieu</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -202,6 +245,12 @@ include('includes/navbar.php');
             <h1 class="h3 mb-2 text-gray-800">All Customer</h1>
             <div class="alert" role="alert" id="notification">
             </div>
+            <?php if (isset($resultEdit)) { ?>
+                <div class="alert <?php if ($kq)  echo ('alert-success');
+                                    else echo 'alert-danger' ?>" role="alert">
+                    <?php echo $resultEdit ?>
+                </div>
+            <?php } ?>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -242,7 +291,23 @@ include('includes/navbar.php');
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="./edit.php" method="POST" id="formEdit">
+                        <form action="./customer.php" method="POST" id="formEdit">
+
+                            <input type="text" hidden name="user_id1">
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect1" name="user_id">
+                                    <option value="" selected disabled>Username</option>
+                                    <?php
+                                    $DB =  new DbServices();
+                                    $roomType = $DB->getAll('account');
+                                    foreach ($roomType as $item) {
+                                        if ($item['account_category'] === "customer") {
+                                            echo '<option  value="' . $item['user_id'] . '">' . $item['username'] . " - " . $item['user_id'] . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
                             <div class="form-group">
                                 <input type="text" name="name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Name" required aria-describedby="basic-addon1">
@@ -268,13 +333,13 @@ include('includes/navbar.php');
                                 <input type="text" name="identify_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Identify Number'" placeholder="Identify Number" aria-label="Identify Number" required aria-describedby="basic-addon1">
                             </div>
 
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -364,10 +429,10 @@ include('includes/navbar.php');
                 var inputs = $('#formEdit input')
                 for (let i = 0; i < inputs.length; i++) {
                     try {
-                        if (i < 2) {
+                        if (i < 3) {
+                            inputs[i].value = $(this).parents('tr')[0].childNodes[i].firstChild.nodeValue
+                        } else if (i < 5) {
                             inputs[i].value = $(this).parents('tr')[0].childNodes[i + 1].firstChild.nodeValue
-                        } else {
-                            inputs[i].value = $(this).parents('tr')[0].childNodes[i + 2].firstChild.nodeValue
                         }
                     } catch (e) {
                         inputs[i].value = ''

@@ -38,8 +38,8 @@ class DbServices
             die();
         }
     }
-	
-		public function rowEffect($sql, $data = [], $fetchMode = PDO::FETCH_ASSOC)
+
+    public function rowEffect($sql, $data = [], $fetchMode = PDO::FETCH_ASSOC)
     {
         if ($this->connection == null) {
             die("Can't connect database.");
@@ -53,7 +53,7 @@ class DbServices
             die();
         }
     }
-	
+
     public function execute1($sql, $data = [], $fetchMode = PDO::FETCH_ASSOC)
     {
         if ($this->connection == null) {
@@ -70,7 +70,7 @@ class DbServices
             die();
         }
     }
-	
+
     function beginTransaction()
     {
         $this->connection->beginTransaction();
@@ -159,7 +159,6 @@ class DbServices
         else {
             $sql .= " where " . $id['name1'] . " ='" . $id['value1'] . "' and " . $id['name2'] . " =" . $id['value2'];
         }
-        //echo $sql;
         $res = $this->execute($sql, $data);
         if ($res > 0) return true;
         else return false;

@@ -3,6 +3,46 @@
 include('includes/header.php');
 include('includes/navbar.php');
 
+require_once "../backend/dbService.php";
+
+
+if (isset(
+    $_POST['room_number'],
+    $_POST['room_number1'],
+    $_POST['category_ID'],
+    $_POST['state'],
+    $_POST['category_ID1'],
+)) {
+
+
+
+    $kq = false;
+    $resultEdit = "";
+    $DB = new DbServices();
+    $sql = "update room set ";
+    $sql .= "room_number = '" . $_POST['room_number'] . "'";
+    $sql .= ",category_ID = '" . $_POST['category_ID'] . "'";
+    $sql .= ",state = " . $_POST['state'];
+
+    $sql .= " where category_ID = '" . $_POST['category_ID1'] . "' and room_number = " . $_POST['room_number1'];
+
+
+
+    try {
+        $result = $DB->rowEffect($sql);
+        if ($result) {
+            $kq = true;
+            $resultEdit = "Success!";
+        } else {
+            $kq = false;
+            $resultEdit = "Error!";
+        }
+    } catch (Exception $e) {
+        $kq = false;
+        $resultEdit = "Error!";
+    }
+};
+
 ?>
 <!-- Custom styles for this page -->
 <script src="vendor/jquery/jquery.min.js"></script>
@@ -164,7 +204,7 @@ include('includes/navbar.php');
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr.Hieu</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -208,6 +248,12 @@ include('includes/navbar.php');
                 </div>
                 <div class="alert" role="alert" id="notification">
                 </div>
+                <?php if (isset($resultEdit)) { ?>
+                    <div class="alert <?php if ($kq)  echo ('alert-success');
+                                        else echo 'alert-danger' ?>" role="alert">
+                        <?php echo $resultEdit ?>
+                    </div>
+                <?php } ?>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
@@ -228,6 +274,55 @@ include('includes/navbar.php');
         </div>
         <!-- /.container-fluid -->
 
+        <!-- Modal -->
+        <div class="modal fade" id="modelEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="./room.php" method="POST" id="formEdit">
+
+                            <input type="text" hidden name="room_number1">
+                            <input type="text" hidden name="category_ID1">
+                            <div class="form-group">
+                                <input type="text" name="room_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Room Number'" placeholder="Room Number" aria-label="Room Number" required aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect1" name="category_ID">
+                                    <option value="" selected disabled>Room Type</option>
+                                    <?php
+                                    $DB =  new DbServices();
+                                    $roomType = $DB->getAll('room_category');
+                                    foreach ($roomType as $item) {
+                                        echo '<option  value="' . $item['category_ID'] . '">' . $item['category_name'] . " - " . $item['category_ID'] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <select class="form-control" id="exampleFormControlSelect2" name="state" id="state">
+                                    <option value="0" selected>0</option>
+                                    <option value="1">1</option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
         <script>
             var editor;
@@ -275,7 +370,7 @@ include('includes/navbar.php');
                         {
                             data: null,
                             className: "dt-center editor-edit",
-                            defaultContent: '<button class="btn btn-warning"><i class="fa fa-wrench" /> </button>',
+                            defaultContent: '<button class="btn btn-warning" data-toggle="modal" data-target="#modelEdit"><i class="fa fa-wrench" /> </button>',
                             orderable: false
                         },
                         {
@@ -293,12 +388,15 @@ include('includes/navbar.php');
             // Edit record
             $('#dataTable').on('click', 'td.editor-edit', function(e) {
                 e.preventDefault();
-
-                // editor.edit($(this).closest('tr'), {
-                //     title: 'Edit record',
-                //     buttons: 'Update'
-                // });
-                alert("edit")
+                var inputs = $('#formEdit input')
+                for (let i = 0; i < inputs.length; i++) {
+                    try {
+                        inputs[i].value = $(this).parents('tr')[0].childNodes[i].firstChild.nodeValue
+                    } catch (e) {
+                        inputs[i].value = ''
+                    }
+                }
+                inputs[2].value = $(this).parents('tr')[0].childNodes[0].firstChild.nodeValue
             });
             // Delete a record
             $('#dataTable').on('click', 'td.editor-delete', function(e) {

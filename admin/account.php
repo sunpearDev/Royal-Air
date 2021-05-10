@@ -2,6 +2,46 @@
 
 include('includes/header.php');
 include('includes/navbar.php');
+require_once "../backend/dbService.php";
+
+if (isset(
+    $_POST['user_id'],
+    $_POST['username'],
+    $_POST['email'],
+    $_POST['password'],
+    $_POST['account_category'],
+)) {
+
+
+
+    $kq = false;
+    $resultEdit = "";
+    $DB = new DbServices();
+    $sql = "update account set ";
+    $sql .= "username = '" . $_POST['username'] . "'";
+    $sql .= ",email = '" . $_POST['email'] . "'";
+    $sql .= ",password = '" . sha1($_POST['password']) . "'";
+    $sql .= ",account_category = '" . $_POST['account_category'] . "'";
+    $sql .= " where user_id = '" . $_POST['user_id'] . "'";
+
+
+    try {
+        $result = $DB->rowEffect($sql);
+        if ($result) {
+            $kq = true;
+            $resultEdit = "Success!";
+        } else {
+            $kq = false;
+            $resultEdit = "Error!";
+        }
+    } catch (Exception $e) {
+        $kq = false;
+        $resultEdit = "Error!";
+    }
+};
+
+?>
+
 
 ?>
 
@@ -165,7 +205,7 @@ include('includes/navbar.php');
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr.Hieu</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -209,6 +249,12 @@ include('includes/navbar.php');
                 </div>
                 <div class="alert" role="alert" id="notification">
                 </div>
+                <?php if (isset($resultEdit)) { ?>
+                    <div class="alert <?php if ($kq)  echo ('alert-success');
+                                        else echo 'alert-danger' ?>" role="alert">
+                        <?php echo $resultEdit ?>
+                    </div>
+                <?php } ?>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -242,7 +288,10 @@ include('includes/navbar.php');
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="./edit.php" method="POST" id="formEdit">
+                        <form action="./account.php" method="POST" id="formEdit">
+
+
+                            <input type="text" hidden name="user_id">
 
                             <div class="form-group">
                                 <select class="form-control" name="account_category">
@@ -264,12 +313,13 @@ include('includes/navbar.php');
                                 <input type="password" name="password" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" placeholder="Password" aria-label="Password" required aria-describedby="basic-addon1">
                             </div>
 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -353,11 +403,12 @@ include('includes/navbar.php');
                 var inputs = $('#formEdit input')
                 for (let i = 0; i < inputs.length; i++) {
                     try {
-                        inputs[i].value = $(this).parents('tr')[0].childNodes[i + 1].firstChild.nodeValue
+                        inputs[i].value = $(this).parents('tr')[0].childNodes[i].firstChild.nodeValue
                     } catch (e) {
                         inputs[i].value = ''
                     }
                 }
+
             });
             // Delete a record
             $('#dataTable').on('click', 'td.editor-delete', function(e) {

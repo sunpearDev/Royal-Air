@@ -3,6 +3,53 @@
 include('includes/header.php');
 include('includes/navbar.php');
 
+
+require_once "../backend/dbService.php";
+
+
+if (isset(
+    $_POST['category_name'],
+    $_POST['single_bed'],
+    $_POST['double_bed'],
+    $_POST['area'],
+    $_POST['description'],
+    $_POST['available'],
+    $_POST['price_on_day'],
+    $_POST['category_ID']
+)) {
+
+
+    // var_dump($_POST);
+    // die();
+    $kq = false;
+    $resultEdit = "";
+    $DB = new DbServices();
+    $sql = "update room_category set ";
+    $sql .= "category_name = '" . $_POST['category_name'] . "'";
+    $sql .= ",single_bed = " . $_POST['single_bed'];
+    $sql .= ",double_bed = " . $_POST['double_bed'];
+    $sql .= ",area = " . $_POST['area'];
+    $sql .= ",description = '" . $_POST['description'] . "'";
+    $sql .= ",available = " . $_POST['available'];
+    $sql .= ",price_on_day = " . $_POST['price_on_day'];
+
+    $sql .= " where category_ID = '" . $_POST['category_ID'] . "'";
+
+    try {
+        $result = $DB->rowEffect($sql);
+        if ($result) {
+            $kq = true;
+            $resultEdit = "Success!";
+        } else {
+            $kq = false;
+            $resultEdit = "Error!";
+        }
+    } catch (Exception $e) {
+        $kq = false;
+        $resultEdit = "Error!";
+    }
+};
+
 ?>
 
 <!-- Custom styles for this page -->
@@ -164,7 +211,7 @@ include('includes/navbar.php');
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr.Hieu</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -208,6 +255,12 @@ include('includes/navbar.php');
                 </div>
                 <div class="alert" role="alert" id="notification">
                 </div>
+                <?php if (isset($resultEdit)) { ?>
+                    <div class="alert <?php if ($kq)  echo ('alert-success');
+                                        else echo 'alert-danger' ?>" role="alert">
+                        <?php echo $resultEdit ?>
+                    </div>
+                <?php } ?>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
@@ -244,8 +297,8 @@ include('includes/navbar.php');
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="./edit.php" method="POST" id="formEdit">
-
+                        <form action="./roomtype.php" method="POST" id="formEdit">
+                            <input type="text" hidden name="category_ID">
                             <div class="form-group">
                                 <input type="text" name="category_name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Room Number" required aria-describedby="basic-addon1">
                             </div>
@@ -274,13 +327,13 @@ include('includes/navbar.php');
                                 <input type="text" name="price_on_day" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Price on day'" placeholder="Price on day" aria-label="Price on day" required aria-describedby="basic-addon1">
                             </div>
 
-
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -382,7 +435,7 @@ include('includes/navbar.php');
                 var inputs = $('#formEdit input')
                 for (let i = 0; i < inputs.length; i++) {
                     try {
-                        inputs[i].value = $(this).parents('tr')[0].childNodes[i + 1].firstChild.nodeValue
+                        inputs[i].value = $(this).parents('tr')[0].childNodes[i].firstChild.nodeValue
                     } catch (e) {
                         inputs[i].value = ''
                     }

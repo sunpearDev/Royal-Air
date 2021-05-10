@@ -4,7 +4,47 @@ include('includes/header.php');
 include('includes/navbar.php');
 
 require_once "../backend/dbService.php";
-$DB = new DbServices();
+
+if (isset(
+    $_POST['user_id'],
+    $_POST['adult'],
+    $_POST['children'],
+    $_POST['ngay1'],
+    $_POST['ngay2'],
+    $_POST['total_pay'],
+    $_POST['booking_ID'],
+)) {
+
+
+
+    $kq = false;
+    $resultEdit = "";
+    $DB = new DbServices();
+    $sql = "update booking set ";
+    $sql .= "user_id = '" . $_POST['user_id'] . "'";
+    $sql .= ",adult = " . $_POST['adult'];
+    $sql .= ",children = " . $_POST['children'];
+    $sql .= ",check_in = '" . date("Y-m-d", strtotime($_POST['ngay1'])) . "'";
+    $sql .= ",check_out = '" . date("Y-m-d", strtotime($_POST['ngay2'])) . "'";
+    $sql .= ",total_pay = " . $_POST['total_pay'];
+
+    $sql .= " where booking_ID = '" . $_POST['booking_ID'] . "'";
+
+
+    try {
+        $result = $DB->rowEffect($sql);
+        if ($result) {
+            $kq = true;
+            $resultEdit = "Success!";
+        } else {
+            $kq = false;
+            $resultEdit = "Error!";
+        }
+    } catch (Exception $e) {
+        $kq = false;
+        $resultEdit = "Error!";
+    }
+};
 
 ?>
 
@@ -167,7 +207,7 @@ $DB = new DbServices();
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr.Hieu</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                         <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -205,6 +245,12 @@ $DB = new DbServices();
 
             <div class="alert" role="alert" id="notification">
             </div>
+            <?php if (isset($resultEdit)) { ?>
+                <div class="alert <?php if ($kq)  echo ('alert-success');
+                                    else echo 'alert-danger' ?>" role="alert">
+                    <?php echo $resultEdit ?>
+                </div>
+            <?php } ?>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -217,7 +263,7 @@ $DB = new DbServices();
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Username</th>
+                                    <th>User ID</th>
                                     <th>Adult</th>
                                     <th>Children</th>
                                     <th>Check-in</th>
@@ -246,17 +292,19 @@ $DB = new DbServices();
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="./addbooking.php" method="POST" id="formEdit">
+                        <form action="./booking.php" method="POST" id="formEdit">
 
+                            <input type="text" hidden name="booking_ID">
                             <div class="form-group">
                                 <select class="form-control" id="exampleFormControlSelect1" name="user_id">
                                     <option value="" selected disabled>Username</option>
                                     <?php
                                     $DB =  new DbServices();
-                                    $sql = "SELECT * FROM account WHERE account_category='customer'";
+                                    // $sql = "SELECT * FROM account WHERE account_category='customer'";
+                                    $sql = "SELECT * FROM account";
                                     if ($roomType =  $DB->execute1($sql)) {
                                         foreach ($roomType as $item) {
-                                            echo '<option  value="' . $item['user_id'] . '">' . $item['username'] . '</option>';
+                                            echo '<option  value="' . $item['user_id'] . '">' . $item['username'] . " - " . $item['user_id'] . '</option>';
                                         }
                                     }
                                     ?>
@@ -295,12 +343,14 @@ $DB = new DbServices();
                                 <input type="text" name="total_pay" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Total Pay'" placeholder="Total Pay" aria-label="Total Pay" required aria-describedby="basic-addon1">
                             </div>
 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -320,8 +370,8 @@ $DB = new DbServices();
                         "label": "ID:",
                         "name": "booking_ID"
                     }, {
-                        "label": "Username:",
-                        "name": "username"
+                        "label": "user_id:",
+                        "name": "user_id"
                     }, {
                         "label": "Adult:",
                         "name": "adult"
@@ -355,7 +405,7 @@ $DB = new DbServices();
                             data: "booking_ID"
                         },
                         {
-                            data: "username"
+                            data: "user_id"
                         },
                         {
                             data: "adult"
@@ -396,7 +446,10 @@ $DB = new DbServices();
                 var inputs = $('#formEdit input')
                 for (let i = 0; i < inputs.length; i++) {
                     try {
-                        inputs[i].value = $(this).parents('tr')[0].childNodes[i + 2].firstChild.nodeValue
+                        if (i < 1)
+                            inputs[i].value = $(this).parents('tr')[0].childNodes[i].firstChild.nodeValue;
+                        else
+                            inputs[i].value = $(this).parents('tr')[0].childNodes[i + 1].firstChild.nodeValue;
                     } catch (e) {
                         inputs[i].value = ''
                     }
