@@ -242,7 +242,7 @@ if (isset(
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">All Booking</h1>
+            <h1 class="h3 mb-2 text-gray-800">All Booking Detail</h1>
 
             <div class="alert" role="alert" id="notification">
             </div>
@@ -256,7 +256,7 @@ if (isset(
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Booking</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Booking Details</h6>
                 </div>
                 <div class="alert" role="alert" id="notification">
                 </div>
@@ -265,10 +265,10 @@ if (isset(
                         <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Booking ID</th>
-                                    <th>Room Type</th>
+                                    <th><a href="./booking.php" />Booking ID</th>
+                                    <th><a href="./roomtype.php" />Room Type</th>
                                     <th>Quantity</th>
-                                    <th>Price On Day</th>
+                                    <th><a href="./roomtype.php" />Price On Day</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -296,7 +296,7 @@ if (isset(
 
                             <input type="text" hidden name="booking_ID1">
                             <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect1" name="booking_ID">
+                                Booking ID:<select class="form-control" id="exampleFormControlSelect1" name="booking_ID">
                                     <option value="" selected disabled>Booking ID</option>
                                     <?php
                                     $DB =  new DbServices();
@@ -311,7 +311,7 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect1" name="category_ID">
+                                Room type:<select class="form-control" id="exampleFormControlSelect1" name="category_ID">
                                     <option value="" selected disabled>Room Type</option>
                                     <?php
                                     $DB =  new DbServices();
@@ -326,7 +326,7 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="quantity" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Quantity'" placeholder="Quantity" aria-label="Double Bed" required aria-describedby="basic-addon1">
+                                Quantity:<input type="text" name="quantity" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Quantity'" placeholder="Quantity" aria-label="Double Bed" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="modal-footer">
@@ -341,32 +341,6 @@ if (isset(
         </div>
 
         <script>
-            var editor;
-
-            $(document).ready(function() {
-                editor = new $.fn.dataTable.Editor({
-                    "ajax": {
-                        url: "booking/fetch.php",
-                        type: "post",
-                        // success: (data) => {console.log(data)}
-                    },
-                    "table": "#dataTable",
-                    "fields": [{
-                        "label": "Booking ID:",
-                        "name": "booking_ID"
-                    }, {
-                        "label": "Room Type:",
-                        "name": "category_ID"
-                    }, {
-                        "label": "Quantity:",
-                        "name": "quantity"
-                    }, {
-                        "label": "Price On Day:",
-                        "name": "price_on_day"
-                    }, ]
-                });
-            })
-
             $(document).ready(function() {
                 var dataTable = $('#dataTable').dataTable({
                     "processing": true,

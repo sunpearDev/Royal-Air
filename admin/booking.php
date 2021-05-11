@@ -24,8 +24,8 @@ if (isset(
     $sql .= "user_id = '" . $_POST['user_id'] . "'";
     $sql .= ",adult = " . $_POST['adult'];
     $sql .= ",children = " . $_POST['children'];
-    $sql .= ",check_in = '" . date("Y-m-d", strtotime($_POST['ngay1'])) . "'";
-    $sql .= ",check_out = '" . date("Y-m-d", strtotime($_POST['ngay2'])) . "'";
+    $sql .= ",check_in = '" . date("Y-m-d H:i:s", strtotime($_POST['ngay1'])) . "'";
+    $sql .= ",check_out = '" . date("Y-m-d H:i:s", strtotime($_POST['ngay2'])) . "'";
     $sql .= ",total_pay = " . $_POST['total_pay'];
 
     $sql .= " where booking_ID = '" . $_POST['booking_ID'] . "'";
@@ -263,7 +263,7 @@ if (isset(
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>User ID</th>
+                                    <th><a href="./account.php" />User ID</th>
                                     <th>Adult</th>
                                     <th>Children</th>
                                     <th>Check-in</th>
@@ -296,7 +296,7 @@ if (isset(
 
                             <input type="text" hidden name="booking_ID">
                             <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect1" name="user_id">
+                                User:<select class="form-control" id="exampleFormControlSelect1" name="user_id">
                                     <option value="" selected disabled>Username</option>
                                     <?php
                                     $DB =  new DbServices();
@@ -312,11 +312,11 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="adult" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Adult'" placeholder="Adult" aria-label="Adult" required aria-describedby="basic-addon1">
+                                Adult:<input type="text" name="adult" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Adult'" placeholder="Adult" aria-label="Adult" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="children" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Children'" placeholder="Children" aria-label="Children" required aria-describedby="basic-addon1">
+                                Children:<input type="text" name="children" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Children'" placeholder="Children" aria-label="Children" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
@@ -340,7 +340,7 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="total_pay" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Total Pay'" placeholder="Total Pay" aria-label="Total Pay" required aria-describedby="basic-addon1">
+                                Total pay:<input type="text" name="total_pay" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Total Pay'" placeholder="Total Pay" aria-label="Total Pay" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="modal-footer">
@@ -356,41 +356,6 @@ if (isset(
         </div>
 
         <script>
-            var editor;
-
-            $(document).ready(function() {
-                editor = new $.fn.dataTable.Editor({
-                    "ajax": {
-                        url: "booking/fetch.php",
-                        type: "post",
-                        // success: (data) => {console.log(data)}
-                    },
-                    "table": "#dataTable",
-                    "fields": [{
-                        "label": "ID:",
-                        "name": "booking_ID"
-                    }, {
-                        "label": "user_id:",
-                        "name": "user_id"
-                    }, {
-                        "label": "Adult:",
-                        "name": "adult"
-                    }, {
-                        "label": "Children:",
-                        "name": "children"
-                    }, {
-                        "label": "Check-in:",
-                        "name": "check_in"
-                    }, {
-                        "label": "Check-out:",
-                        "name": "check_out"
-                    }, {
-                        "label": "Total Pay:",
-                        "name": "total_pay"
-                    }, ]
-                });
-            })
-
             $(document).ready(function() {
                 var dataTable = $('#dataTable').dataTable({
                     "processing": true,

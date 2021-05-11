@@ -300,31 +300,31 @@ if (isset(
                         <form action="./roomtype.php" method="POST" id="formEdit">
                             <input type="text" hidden name="category_ID">
                             <div class="form-group">
-                                <input type="text" name="category_name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Room Number" required aria-describedby="basic-addon1">
+                                Room type:<input type="text" name="category_name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Room Number" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="single_bed" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Single Bed'" placeholder="Single Bed" aria-label="Single Bed" required aria-describedby="basic-addon1">
+                                Single bed:<input type="text" name="single_bed" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Single Bed'" placeholder="Single Bed" aria-label="Single Bed" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="double_bed" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Double Bed'" placeholder="Double Bed" aria-label="Double Bed" required aria-describedby="basic-addon1">
+                                Double bed:<input type="text" name="double_bed" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Double Bed'" placeholder="Double Bed" aria-label="Double Bed" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="area" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Area'" placeholder="Area" aria-label="Area" required aria-describedby="basic-addon1">
+                                Area:<input type="text" name="area" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Area'" placeholder="Area" aria-label="Area" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="description" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'" placeholder="Description" aria-label="Description" required aria-describedby="basic-addon1">
+                                Description:<input type="text" name="description" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'" placeholder="Description" aria-label="Description" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="available" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Available'" placeholder="Available" aria-label="Available" required aria-describedby="basic-addon1">
+                                Available:<input type="text" name="available" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Available'" placeholder="Available" aria-label="Available" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="price_on_day" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Price on day'" placeholder="Price on day" aria-label="Price on day" required aria-describedby="basic-addon1">
+                                Price on day:<input type="text" name="price_on_day" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Price on day'" placeholder="Price on day" aria-label="Price on day" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="modal-footer">
@@ -339,44 +339,6 @@ if (isset(
         </div>
 
         <script>
-            var editor;
-
-            $(document).ready(function() {
-                editor = new $.fn.dataTable.Editor({
-                    "ajax": {
-                        url: "roomtype/fetch.php",
-                        type: "post",
-                        // success: (data) => {console.log(data)}
-                    },
-                    "table": "#dataTable",
-                    "fields": [{
-                        "label": "ID:",
-                        "name": "category_ID"
-                    }, {
-                        "label": "Name:",
-                        "name": "category_name"
-                    }, {
-                        "label": "Single Bed:",
-                        "name": "single_bed"
-                    }, {
-                        "label": "Double Bed:",
-                        "name": "double_bed"
-                    }, {
-                        "label": "Area:",
-                        "name": "area"
-                    }, {
-                        "label": "Description:",
-                        "name": "description"
-                    }, {
-                        "label": "Available:",
-                        "name": "available"
-                    }, {
-                        "label": "price_on_day:",
-                        "name": "Price_on_day"
-                    }, ]
-                });
-            })
-
             $(document).ready(function() {
                 var dataTable = $('#dataTable').dataTable({
                     "processing": true,

@@ -230,13 +230,13 @@ if (isset(
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Room Type</h1>
+            <h1 class="h3 mb-2 text-gray-800">Booking Detail</h1>
 
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Add Room Type</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Add Booking Detail</h6>
                 </div>
 
                 <?php if (isset($resultAdd)) {
@@ -271,7 +271,7 @@ if (isset(
                                 </div>
 
                                 <div class="form-group">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="category_ID">
+                                    <select class="form-control" id="exampleFormControlSelect2" name="category_ID">
                                         <option value="" selected disabled>Room Type</option>
                                         <?php
                                         $DB =  new DbServices();

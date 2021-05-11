@@ -262,7 +262,7 @@ if (isset(
                         <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>User ID</th>
+                                    <th><a href="./account.php" />User ID</th>
                                     <th>Name</th>
                                     <th>Phone Number</th>
                                     <th>Gender</th>
@@ -295,7 +295,7 @@ if (isset(
 
                             <input type="text" hidden name="user_id1">
                             <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect1" name="user_id">
+                                User:<select class="form-control" id="exampleFormControlSelect1" name="user_id">
                                     <option value="" selected disabled>Username</option>
                                     <?php
                                     $DB =  new DbServices();
@@ -310,15 +310,15 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Name" required aria-describedby="basic-addon1">
+                                Name:<input type="text" name="name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Name" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="phone_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" placeholder="Phone Number" aria-label="Phone Number" required aria-describedby="basic-addon1">
+                                Phone number:<input type="text" name="phone_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" placeholder="Phone Number" aria-label="Phone Number" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <select class="form-control" name="gender">
+                                Gender:<select class="form-control" name="gender">
                                     <option value="" selected disabled>Gender</option>
                                     <option value="1">Male</option>
                                     <option value="0">Female</option>
@@ -326,11 +326,11 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="address" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" placeholder="Address" aria-label="Address" required aria-describedby="basic-addon1">
+                                Address:<input type="text" name="address" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" placeholder="Address" aria-label="Address" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="identify_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Identify Number'" placeholder="Identify Number" aria-label="Identify Number" required aria-describedby="basic-addon1">
+                                Identify number:<input type="text" name="identify_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Identify Number'" placeholder="Identify Number" aria-label="Identify Number" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="modal-footer">
@@ -345,38 +345,6 @@ if (isset(
         </div>
 
         <script>
-            var editor;
-
-            $(document).ready(function() {
-                editor = new $.fn.dataTable.Editor({
-                    "ajax": {
-                        url: "roomtype/fetch.php",
-                        type: "post",
-                        // success: (data) => {console.log(data)}
-                    },
-                    "table": "#dataTable",
-                    "fields": [{
-                        "label": "User ID:",
-                        "name": "user_id"
-                    }, {
-                        "label": "Name:",
-                        "name": "name"
-                    }, {
-                        "label": "Phone Number:",
-                        "name": "phone_number"
-                    }, {
-                        "label": "Gender:",
-                        "name": "gender"
-                    }, {
-                        "label": "Address:",
-                        "name": "address"
-                    }, {
-                        "label": "Identify Number:",
-                        "name": "identify_number"
-                    }, ]
-                });
-            })
-
             $(document).ready(function() {
                 var dataTable = $('#dataTable').dataTable({
                     "processing": true,
