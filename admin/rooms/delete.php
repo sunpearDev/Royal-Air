@@ -10,6 +10,8 @@ if (isset($_POST['category_ID'], $_POST['room_number'])) {
         $result =  $DB->rowEffect($sql);
 
         if ($result) {
+            $available = $DB->getBy('room_category', ['name' => 'category_ID', 'value' => $_POST['category_ID']])[0]['available'];
+            $result = $DB->update('room_category', ['name' => 'category_ID', 'value' => $_POST['category_ID']], ['available' => $available - 1]);
             echo "Deleted Successfully";
         } else {
             echo "Delete Error";

@@ -25,6 +25,8 @@ if (isset($_POST['room_number'], $_POST['category_ID'])) {
         );
         if ($result)
             $kq = true;
+        $available = $DB->getBy('room_category', ['name' =>'category_ID', 'value' =>$_POST['category_ID']])[0]['available'];
+        $result = $DB->update('room_category', ['name' =>'category_ID', 'value' =>$_POST['category_ID']], ['available' => $available + 1]);
     } catch (Exception $e) {
     }
 

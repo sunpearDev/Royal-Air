@@ -8,7 +8,8 @@ $res = $category->searchRoom($_POST['quantity'], $_POST['adult'], $_POST['child'
     <div class="progress-table">
         <div class="table-head">
             <h2 class="country w-100 p-3">
-                <?php echo $_POST['quantity'] . ' room for ' . $_POST['adult'] . ' adult';
+                <?php if ($_POST['quantity'] == 0) $_POST['quantity'] = 1;
+                echo $_POST['quantity'] . ' room for ' . $_POST['adult'] . ' adult';
                 if ($_POST['child'] > 0) echo ' and ' . $_POST['child'] . ' child';
                 ?>
             </h2>
@@ -23,40 +24,45 @@ $res = $category->searchRoom($_POST['quantity'], $_POST['adult'], $_POST['child'
                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                             <div class="col-4 d-none d-lg-block">
                                 <div class="bd-example">
-                                    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+                                    <div id="carouselExampleCaptions'.$item['category_ID'] .'" class="carousel slide" data-ride="carousel">
                                         <ol class="carousel-indicators">
-                                            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                                            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                                            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+                                            ';
+                    if (count($item['image']) == 0)
+                        $html .= '<li data-target="#carouselExampleCaptions'.$item['category_ID'].'" data-slide-to="0" class="active"></li>';
+                    else {
+                        $html .= '<li data-target="#carouselExampleCaptions'.$item['category_ID'].'" data-slide-to="0" class="active"></li>';
+                        for ($i = 1; $i < count($item['image']); $i++)
+                            $html .= '<li data-target="#carouselExampleCaptions'.$item['category_ID'].'" data-slide-to="' . $i . '"></li>';
+                    }
+
+                    $html .= '
+                                            
                                         </ol>
                                         <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img src="http://designwebhotel.com/wp-content/uploads/2020/07/cac-loai-hinh-kinh-doanh-khach-san-o-viet-nam-2.png" class="d-block w-100" alt="...">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <h5>First slide label</h5>
-                                                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="http://designwebhotel.com/wp-content/uploads/2020/07/cac-loai-hinh-kinh-doanh-khach-san-o-viet-nam-2.png" class="d-block w-100" alt="...">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <h5>Second slide label</h5>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                                </div>
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="http://designwebhotel.com/wp-content/uploads/2020/07/cac-loai-hinh-kinh-doanh-khach-san-o-viet-nam-2.png" class="d-block w-100" alt="...">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <h5>Third slide label</h5>
-                                                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                                </div>
-                                            </div>
+                                            ';
+                    if (count($item['image']) == 0)
+                        $html .= '<div class="carousel-item active">
+                                    <img height="250px" src="/image/grey.jpg" class="d-block w-100" alt="...">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>Unavailable</h5>
+                                    </div>
+                                </div>';
+                    else {
+                        $html .=  '<div class="carousel-item active">
+                        <img height="250px" src="/image/'.$item['image'][0]['name'].'" class="d-block w-100" alt="...">
+                    </div>';
+                        for ($i = 1; $i < count($item['image']); $i++)
+                            $html .= '<div class="carousel-item">
+                            <img height="250px" src="/image/'.$item['image'][$i]['name'].'" class="d-block w-100" alt="...">
+                        </div>';
+                    }
+                    $html .= '
                                         </div>
-                                        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                                        <a class="carousel-control-prev" href="#carouselExampleCaptions'.$item['category_ID'] .'" role="button" data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span>
                                         </a>
-                                        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                                        <a class="carousel-control-next" href="#carouselExampleCaptions'.$item['category_ID'] .'" role="button" data-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
                                         </a>
@@ -79,7 +85,7 @@ $res = $category->searchRoom($_POST['quantity'], $_POST['adult'], $_POST['child'
                         $html .= '<div class="col-md-4">
                                         <div class="row d-flex justify-content-center need-top">
                                             <a class="book_now_btn button_hover circle"
-                                          href="booking.php?booking=true&quantity=' . $_POST['quantity'] . '&category=' . $item['category_ID'] . '&child='.$_POST['child'] .'&adult='.$_POST['adult'] .'&check_in='.$_POST['check_in'] .'&check_out='.$_POST['check_out'] .'" >Book It <span class="lnr lnr-arrow-right"></span></a>
+                                          href="booking.php?booking=true&quantity=' . $_POST['quantity'] . '&category=' . $item['category_ID'] . '&child=' . $_POST['child'] . '&adult=' . $_POST['adult'] . '&check_in=' . $_POST['check_in'] . '&check_out=' . $_POST['check_out'] . '" >Book It <span class="lnr lnr-arrow-right"></span></a>
                                         </div>
                                         <div class="row p-3 d-flex justify-content-center">
                                         <h4 class="money">' . $item['price_on_day'] . ' $/day</h4>
