@@ -21,7 +21,10 @@ while ($row = mysqli_fetch_array($query)) {
     $subdata['user_id'] = $row[0];
     $subdata['name'] = $row[1];
     $subdata['phone_number'] = $row[2];
-    $subdata['gender'] = $row[3];
+    if ($row[3] == 1)
+        $subdata['gender'] = 'Male';
+    else
+        $subdata['gender'] = 'Female';
     $subdata['address'] = $row[4];
     $subdata['identify_number'] = $row[5];
     $data[] = $subdata;

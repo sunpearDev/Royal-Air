@@ -260,7 +260,7 @@ if (isset(
                             <thead>
                                 <tr>
                                     <th>Room Number</th>
-                                    <th>Room Type</th>
+                                    <th><a href="./roomtype.php" />Room Type</th>
                                     <th>State</th>
                                     <th></th>
                                     <th></th>
@@ -290,11 +290,11 @@ if (isset(
                             <input type="text" hidden name="room_number1">
                             <input type="text" hidden name="category_ID1">
                             <div class="form-group">
-                                <input type="text" name="room_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Room Number'" placeholder="Room Number" aria-label="Room Number" required aria-describedby="basic-addon1">
+                                Room number:<input type="text" name="room_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Room Number'" placeholder="Room Number" aria-label="Room Number" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect1" name="category_ID">
+                                Room type:<select class="form-control" id="exampleFormControlSelect1" name="category_ID">
                                     <option value="" selected disabled>Room Type</option>
                                     <?php
                                     $DB =  new DbServices();
@@ -307,7 +307,7 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <select class="form-control" id="exampleFormControlSelect2" name="state" id="state">
+                                State:<select class="form-control" id="exampleFormControlSelect2" name="state" id="state">
                                     <option value="0" selected>0</option>
                                     <option value="1">1</option>
                                 </select>
@@ -325,29 +325,6 @@ if (isset(
         </div>
 
         <script>
-            var editor;
-
-            $(document).ready(function() {
-                editor = new $.fn.dataTable.Editor({
-                    "ajax": {
-                        url: "fetch.php",
-                        type: "post",
-                        // success: (data) => {console.log(data)}
-                    },
-                    "table": "#dataTable",
-                    "fields": [{
-                        "label": "RoomNumber:",
-                        "name": "roomNumber"
-                    }, {
-                        "label": "RoomType:",
-                        "name": "roomType"
-                    }, {
-                        "label": "State:",
-                        "name": "state"
-                    }, ]
-                });
-            })
-
             $(document).ready(function() {
                 var dataTable = $('#dataTable').dataTable({
                     "processing": true,

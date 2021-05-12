@@ -8,7 +8,7 @@ if (isset(
     $_POST['user_id'],
     $_POST['username'],
     $_POST['email'],
-    $_POST['password'],
+    // $_POST['password'],
     $_POST['account_category'],
 )) {
 
@@ -20,7 +20,8 @@ if (isset(
     $sql = "update account set ";
     $sql .= "username = '" . $_POST['username'] . "'";
     $sql .= ",email = '" . $_POST['email'] . "'";
-    $sql .= ",password = '" . sha1($_POST['password']) . "'";
+    if (isset($_POST['password']))
+        $sql .= ",password = '" . sha1($_POST['password']) . "'";
     $sql .= ",account_category = '" . $_POST['account_category'] . "'";
     $sql .= " where user_id = '" . $_POST['user_id'] . "'";
 
@@ -294,7 +295,7 @@ if (isset(
                             <input type="text" hidden name="user_id">
 
                             <div class="form-group">
-                                <select class="form-control" name="account_category">
+                                Account type:<select class="form-control" name="account_category">
                                     <option value="" selected disabled>Account Type</option>
                                     <option value="admin">Admin</option>
                                     <option value="customer">Customer</option>
@@ -302,15 +303,15 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="username" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" placeholder="Username" aria-label="Username" required aria-describedby="basic-addon1">
+                                Username:<input type="text" name="username" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" placeholder="Username" aria-label="Username" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="email" name="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" placeholder="Email" aria-label="Email" required aria-describedby="basic-addon1">
+                                Email:<input type="email" name="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" placeholder="Email" aria-label="Email" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                <input type="password" name="password" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" placeholder="Password" aria-label="Password" required aria-describedby="basic-addon1">
+                                Password:<input type="password" name="password" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" placeholder="Password" aria-label="Password" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="modal-footer">
@@ -325,35 +326,6 @@ if (isset(
         </div>
 
         <script>
-            var editor;
-
-            $(document).ready(function() {
-                editor = new $.fn.dataTable.Editor({
-                    "ajax": {
-                        url: "roomtype/fetch.php",
-                        type: "post",
-                        // success: (data) => {console.log(data)}
-                    },
-                    "table": "#dataTable",
-                    "fields": [{
-                        "label": "ID:",
-                        "name": "user_id"
-                    }, {
-                        "label": "Username:",
-                        "name": "username"
-                    }, {
-                        "label": "Email:",
-                        "name": "email"
-                    }, {
-                        "label": "Password:",
-                        "name": "password"
-                    }, {
-                        "label": "Account Type:",
-                        "name": "account_category"
-                    }, ]
-                });
-            })
-
             $(document).ready(function() {
                 var dataTable = $('#dataTable').dataTable({
                     "processing": true,

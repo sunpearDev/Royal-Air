@@ -11,7 +11,7 @@ if (isset(
     $_POST['double_bed'],
     $_POST['area'],
     $_POST['description'],
-    $_POST['available'],
+    // $_POST['available'],
     $_POST['price_on_day']
 )) {
 
@@ -31,7 +31,7 @@ if (isset(
                 'double_bed' => $_POST['double_bed'],
                 'area' => $_POST['area'],
                 'description' => $_POST['description'],
-                'available' => $_POST['available'],
+                'available' => 0,
                 'price_on_day' => $_POST['price_on_day'],
             ]
         );
@@ -272,10 +272,6 @@ if (isset(
 
                                 <div class="form-group">
                                     <input type="text" name="description" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Description'" placeholder="Description" aria-label="Description" required aria-describedby="basic-addon1">
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="text" name="available" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Available'" placeholder="Available" aria-label="Available" required aria-describedby="basic-addon1">
                                 </div>
 
                                 <div class="form-group">

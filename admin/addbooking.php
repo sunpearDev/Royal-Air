@@ -33,8 +33,8 @@ if (isset(
                 'user_id' => $_POST['user_id'],
                 'adult' => $_POST['adult'],
                 'children' => $_POST['children'],
-                'check_in' => date("Y-m-d", strtotime($_POST['ngay1'])),
-                'check_out' => date("Y-m-d", strtotime($_POST['ngay2'])),
+                'check_in' => date("Y-m-d H:i:s", strtotime($_POST['ngay1'])),
+                'check_out' => date("Y-m-d H:i:s", strtotime($_POST['ngay2'])),
                 'total_pay' => $_POST['total_pay']
             ]
 

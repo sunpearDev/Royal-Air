@@ -20,7 +20,7 @@ while ($row = mysqli_fetch_array($query)) {
     $subdata['user_id'] = $row[0];
     $subdata['username'] = $row[1];
     $subdata['email'] = $row[2];
-    $subdata['password'] = $row[3];
+    $subdata['password'] = '********';
     $subdata['account_category'] = $row[4];
     $data[] = $subdata;
 }

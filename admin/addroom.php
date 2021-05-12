@@ -19,7 +19,7 @@ if (isset($_POST['room_number'], $_POST['category_ID'])) {
             [
                 'room_number' => $_POST['room_number'],
                 'category_ID' => $_POST['category_ID'],
-                'state' => $_POST['state'],
+                'state' => 0,
             ]
 
         );
@@ -258,14 +258,6 @@ if (isset($_POST['room_number'], $_POST['category_ID'])) {
                                         ?>
                                     </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <select class="form-control" name="state">
-                                        <option value="0" selected>0</option>
-                                        <option value="1">1</option>
-                                    </select>
-                                </div>
-
 
                                 <div class="mt-30 row justify-content-center">
                                     <input id="comfirm-add-btn" type="submit" name="submit" value="Add" class="w-25 genric-btn danger radius" />
