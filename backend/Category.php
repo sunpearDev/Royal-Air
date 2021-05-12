@@ -22,4 +22,29 @@ class Category extends DbServices
         }
         return $res;
     }
+    function listRoom($id){
+    $categorys =$this->getAll("room_category");
+    $res = [];
+        if($id!=null)
+        {
+        foreach ($categorys as $cat){
+            $images  =$this->getMultiTable([0=>'room_category',1=>'image'],['name' => 'category_ID', 'value' => $cat['category_ID']]) ;
+            $cat['image'] = $images;
+            $res[] = $cat;
+            }
+        }return $res;
+    }
+    function listRoom1($id){
+        $categorys =$this->getAll("image");
+        $res = [];
+            if($id!=null)
+            {
+            foreach ($categorys as $cat){
+                $images  =$this->getMultiTable([0=>'room_category',1=>'image'],['name' => 'category_ID', 'value' => $cat['category_ID']]) ;
+                $cat['image'] = $images;
+                $res[] = $cat;
+                }
+            }return $res;
+        }
+   
 }
