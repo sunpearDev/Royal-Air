@@ -5,8 +5,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fa fa-close"></i>
                 </button>
-                <h2>Thank you</h2>
-                <p>Your message is successfully sent...</p>
+                <h2> Xin cảm ơn </h2>
+                 <p> Tin nhắn của bạn đã được gửi thành công ... </p>
             </div>
         </div>
     </div>
@@ -21,8 +21,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fa fa-close"></i>
                 </button>
-                <h2>Sorry !</h2>
-                <p> Something went wrong </p>
+                <h2> Xin lỗi! </h2>
+                 <p> Đã xảy ra sự cố </p>
             </div>
         </div>
     </div>

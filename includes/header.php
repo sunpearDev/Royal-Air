@@ -10,10 +10,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                 <ul class="nav navbar-nav menu_nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="/index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/about.php">About us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/accomodation.php">Accomodation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/gallery.php">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/index.php">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about.php">Về chúng tôi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/accomodation.php">Chỗ ở</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/gallery.php">Bộ sưu tập</a></li>
                     <li class="nav-item submenu dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                         <ul class="dropdown-menu">
@@ -27,7 +27,7 @@
                     } else
                         echo '<li class="nav-item"><a class="nav-link" href="/login.php"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Login</a></li><li class="nav-item"><a class="nav-link" href="/register.php"><i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp;Register</a></li>';
                     ?>
-                    <li class="nav-item"><a class="nav-link" href="/contact.php">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact.php">liên lạc</a></li>
 
                 </ul>
             </div>

@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row hotel_booking_table">
             <div class="col-md-3">
-                <h2>Book<br> Your Room</h2>
+                <h2>Đặt trước<br> Phòng của bạn</h2>
             </div>
             <div class="col-md-9">
                 <div class="boking_table">
@@ -34,21 +34,21 @@
                             <div class="book_tabel_item">
                                 <div class="input-group">
                                     <select class="wide" name='adult'>
-                                        <option data-display="Adult" value="0">Adult</option>
-                                        <option value="1" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 1) echo 'selected' ?>>1 Adult</option>
-                                        <option value="2" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 2) echo 'selected' ?>>2 Adult</option>
-                                        <option value="3" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 3) echo 'selected' ?>>3 Adult</option>
-                                        <option value="4" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 4) echo 'selected' ?>>4 Adult</option>
-                                        <option value="4" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 5) echo 'selected' ?>>5 Adult</option>
-                                        <option value="4" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 6) echo 'selected' ?>>6 Adult</option>
+                                        <option data-display="Adult" value="0">Người lớn</option>
+                                        <option value="1" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 1) echo 'selected' ?>>1 Người lớn</option>
+                                        <option value="2" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 2) echo 'selected' ?>>2 Người lớn</option>
+                                        <option value="3" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 3) echo 'selected' ?>>3 Người lớn</option>
+                                        <option value="4" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 4) echo 'selected' ?>>4 Người lớn</option>
+                                        <option value="4" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 5) echo 'selected' ?>>5 Người lớn</option>
+                                        <option value="4" <?php if (isset($_POST['adult'])) if ($_POST['adult'] == 6) echo 'selected' ?>>6 Người lớn</option>
                                     </select>
                                 </div>
                                 <div class="input-group">
                                     <select class="wide" name="child">
-                                        <option data-display="Child" value="0">Child</option>
-                                        <option value="1" <?php if (isset($_POST['child'])) if ($_POST['child'] == 1) echo 'selected' ?>>1 Child</option>
-                                        <option value="2" <?php if (isset($_POST['child'])) if ($_POST['child'] == 2) echo 'selected' ?>>2 Child</option>
-                                        <option value="3" <?php if (isset($_POST['child'])) if ($_POST['child'] == 3) echo 'selected' ?>>3 Child</option>
+                                        <option data-display="Child" value="0">Trẻ em</option>
+                                        <option value="1" <?php if (isset($_POST['child'])) if ($_POST['child'] == 1) echo 'selected' ?>>1 Trẻ em</option>
+                                        <option value="2" <?php if (isset($_POST['child'])) if ($_POST['child'] == 2) echo 'selected' ?>>2 Trẻ em</option>
+                                        <option value="3" <?php if (isset($_POST['child'])) if ($_POST['child'] == 3) echo 'selected' ?>>3 Trẻ em</option>
                                     </select>
                                 </div>
                             </div>
@@ -57,14 +57,14 @@
                             <div class="book_tabel_item">
                                 <div class="input-group">
                                     <select class="wide" name="quantity">
-                                        <option data-display="Amount of room" value="0">Room</option>
-                                        <option value="1" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 1) echo 'selected' ?>>1 Room</option>
-                                        <option value="2" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 2) echo 'selected' ?>>2 Room</option>
-                                        <option value="3" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 3) echo 'selected' ?>>3 Room</option>
+                                        <option data-display="Amount of room" value="0">Đặt trước</option>
+                                        <option value="1" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 1) echo 'selected' ?>>1 Phòng</option>
+                                        <option value="2" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 2) echo 'selected' ?>>2 Phòng</option>
+                                        <option value="3" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 3) echo 'selected' ?>>3 Phòng</option>
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="book_now_btn button_hover">Book Now</button>
+                            <button type="submit" class="book_now_btn button_hover">Đặt trước</button>
                         </div>
                     </div>
                 </div>

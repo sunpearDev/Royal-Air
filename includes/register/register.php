@@ -23,17 +23,17 @@ if (isset($_POST['submit'])) {
                 <div class="col-lg-3 col-md-3">
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <h1 class="title_color">Register</h1>
+                    <h1 class="title_color">Đăng ký</h1>
                     <form action="./register.php" method="POST">
                         <div class="mt-30">
-                            <input type="text" name="username" placeholder="User name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'User name'" required class="single-input">
+                            <input type="text" name="username" placeholder="Tên tài khoản" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tên tài khoản'" required class="single-input">
                         </div>
                         <div class="mt-10">
                             <input type="email" name="email" id="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required class="single-input">
                         </div>
 
                         <div class="mt-10">
-                            <input type="password" name="password" id="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required class="single-input">
+                            <input type="password" name="password" id="password" placeholder="Mật khẩu" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Mật khẩu'" required class="single-input">
                         </div>
                         <div class="mt-10" style="position: relative;">
                             <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm password'" required class="single-input" onchange="check()">
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
                         </div>
 
                         <div class="mt-30 row justify-content-center">
-                            <input id="comfirm-register-btn" type="submit" name="submit" value="Register" class="w-25 genric-btn danger radius" />
+                            <input id="comfirm-register-btn" type="submit" name="submit" value="Đăng ký" class="w-25 genric-btn danger radius" />
                         </div>
                     </form>
                 </div>
