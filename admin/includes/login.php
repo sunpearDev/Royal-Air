@@ -11,6 +11,7 @@ if (isset($_POST['submit'])) {
             echo "<script> window.location='/admin/index.php'</script>";
         }
     }
+    var_dump($_COOKIE);
 }
 ?>
 <div class="whole-wrap">

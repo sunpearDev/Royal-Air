@@ -36,45 +36,38 @@ session_start();
         include('./includes/booking/searchRoom.php');
     } elseif ($_GET['booking'] == true) {
         //if (!isset($_COOKIE['token'])) session_destroy();
-        foreach ($_GET as $key => $value) {
-            if (strpos($key, 'quantity') > -1) {
-                if ($value > 0) {
-                    //$_SESSION[explode('_', $key)[1]] = $value;
-                    echo '<script> document.cookie="' . explode('_', $key)[1] . '=' . $value . ' ;max-age=864000"; </script>';
+        if (isset($_GET)) {
+            foreach ($_GET as $key => $value) {
+                if (strpos($key, 'quantity') > -1) {
+                    if ($value > 0) {
+                        echo '<script> document.cookie="' . explode('_', $key)[1] . '=' . $value . ' ;max-age=864000"; </script>';
+                    }
+                } else //$_SESSION[$key] = $value;
+                    echo '<script> document.cookie="' . $key . '=' . $value . ' ;max-age=864000"; </script>';
+            }
+            sleep(10);
+            if (!isset($_COOKIE['token'])) {
+                echo "<script> window.location='login.php'</script>";
+            } else {
+                $booking_info = ['booking_ID' => uniqid(), 'user_id' => ($_COOKIE['token']), 'adult' => ($_COOKIE['adult']), 'children' => ($_COOKIE['child']), 'check_in' => ($_COOKIE['check_in']), 'check_out' => ($_COOKIE['check_out'])];
+                $res = $booking->createOneBooking($booking_info);
+                if ($res['status'] == true) {
+                    foreach ($_COOKIE as $key => $value) {
+                        if ($key != 'token' && $key != 'username' && $key != 'PHPSESSID') {
+                            $booking_detail_info = ['booking_ID' => $booking_info['booking_ID'], 'category_ID' => $key, 'quantity' => (int)$value, 'price_on_day' => 0];
+                            
+                            $booking->createOneBookingDetails($booking_detail_info);
+                        }
+                    }
                 }
-            } else //$_SESSION[$key] = $value;
-                echo '<script> document.cookie="' . $key . '=' . $value . ' ;max-age=864000"; </script>';
-        }
-        print_r($_COOKIE);
-        if (!isset($_COOKIE['token'])) {
-            echo "<script> window.location='login.php'</script>";
-        } else {
-            $booking_info = ['booking_ID' => uniqid(), 'user_id' => ($_COOKIE['token']), 'adult' => ($_COOKIE['adult']), 'children' => ($_COOKIE['child']), 'check_in' => ($_COOKIE['check_in']), 'check_out' => ($_COOKIE['check_out'])];
-            unset($_COOKIE['adult']);
-            unset($_COOKIE['children']);
-            unset($_COOKIE['check_in']);
-            unset($_COOKIE['check_out']);
-            $res = $booking->createOneBooking($booking_info);
-            if ($res['status'] == true) {
                 foreach ($_COOKIE as $key => $value) {
                     if ($key != 'token' && $key != 'username' && $key != 'PHPSESSID') {
-                        $booking_detail_info = ['booking_ID' => $booking_info['booking_ID'], 'category_ID' => $key, 'quantity' => (int)$value, 'price_on_day' => 0];
-                        //print_r($booking_detail_info);
-                        $booking->createOneBookingDetails($booking_detail_info);
+                        echo '<script> document.cookie="' . $key . '= ;max-age=0"; </script>';
                     }
                 }
+                
+                echo "<script> window.location='account.php?booking=true'</script>";
             }
-            if (isset($_COOKIE)) {
-                foreach ($_COOKIE as $cookie) {
-                    $parts = explode('=', $cookie);
-                    $name = trim($parts[0]);
-                    if ($name != 'token' && $name != 'username' && $name != 'PHPSESSID') {
-                        setcookie($name, '', time() - 1000);
-                        setcookie($name, '', time() - 1000, '/');
-                    }
-                }
-            }
-            echo "<script> window.location='account.php?booking=true'</script>";
         }
     }
     ?>
