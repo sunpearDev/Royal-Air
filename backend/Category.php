@@ -6,6 +6,18 @@ class Category extends DbServices
     {
         return $this->getBy("room_category", ['name' => 'category_ID', 'value' => $id]);
     }
+    function getAllCategory()
+    {
+        $res = $this->getAll("room_category");
+        foreach ($res as $item) {
+            $images = $this->getBy("image", ['name' => 'category_ID', 'value' => $item['category_ID']]);
+            $item['image'] = $images;
+            $res1[] = $item;
+        }
+        //print_r($res);
+        //echo '<br />';
+        return $res1;
+    }
     function searchRoom($quantity, $adult, $child)
     {
         $multiplesBody = $adult + $child / 2;
@@ -22,29 +34,30 @@ class Category extends DbServices
         }
         return $res;
     }
-    function listRoom($id){
-    $categorys =$this->getAll("room_category");
-    $res = [];
-        if($id!=null)
-        {
-        foreach ($categorys as $cat){
-            $images  =$this->getMultiTable([0=>'room_category',1=>'image'],['name' => 'category_ID', 'value' => $cat['category_ID']]) ;
-            $cat['image'] = $images;
-            $res[] = $cat;
-            }
-        }return $res;
-    }
-    function listRoom1($id){
-        $categorys =$this->getAll("image");
+    function listRoom($id)
+    {
+        $categorys = $this->getAll("room_category");
         $res = [];
-            if($id!=null)
-            {
-            foreach ($categorys as $cat){
-                $images  =$this->getMultiTable([0=>'room_category',1=>'image'],['name' => 'category_ID', 'value' => $cat['category_ID']]) ;
+        if ($id != null) {
+            foreach ($categorys as $cat) {
+                $images  = $this->getMultiTable([0 => 'room_category', 1 => 'image'], ['name' => 'category_ID', 'value' => $cat['category_ID']]);
                 $cat['image'] = $images;
                 $res[] = $cat;
-                }
-            }return $res;
+            }
         }
-   
+        return $res;
+    }
+    function listRoom1($id)
+    {
+        $categorys = $this->getAll("image");
+        $res = [];
+        if ($id != null) {
+            foreach ($categorys as $cat) {
+                $images  = $this->getMultiTable([0 => 'room_category', 1 => 'image'], ['name' => 'category_ID', 'value' => $cat['category_ID']]);
+                $cat['image'] = $images;
+                $res[] = $cat;
+            }
+        }
+        return $res;
+    }
 }

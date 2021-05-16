@@ -29,8 +29,6 @@ class DbServices
         }
         $stm = $this->connection->prepare($sql);
 
-
-
         if ($stm->execute($data)) {
             return $stm->rowCount();
         } else {
@@ -159,6 +157,7 @@ class DbServices
         else {
             $sql .= " where " . $id['name1'] . " ='" . $id['value1'] . "' and " . $id['name2'] . " =" . $id['value2'];
         }
+        //echo $sql;
         $res = $this->execute($sql, $data);
         if ($res > 0) return true;
         else return false;

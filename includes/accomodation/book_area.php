@@ -1,5 +1,4 @@
-<form class="hotel_booking_area" method="post" action="<?php if (isset($_COOKIE['token'])) echo './booking.php';
-                                                        else echo './login'; ?>">
+<form class="hotel_booking_area" method="post" action="./booking.php">
     <div class="container">
         <div class="row hotel_booking_table">
             <div class="col-md-3">
@@ -54,17 +53,8 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="book_tabel_item">
-                                <div class="input-group">
-                                    <select class="wide" name="quantity">
-                                        <option data-display="Amount of room" value="0">Room</option>
-                                        <option value="1" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 1) echo 'selected' ?>>1 Room</option>
-                                        <option value="2" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 2) echo 'selected' ?>>2 Room</option>
-                                        <option value="3" <?php if (isset($_POST['quantity'])) if ($_POST['quantity'] == 3) echo 'selected' ?>>3 Room</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="book_now_btn button_hover">Book Now</button>
+                            
+                            <button type="submit" class="book_now_btn button_hover">Find Now</button>
                         </div>
                     </div>
                 </div>

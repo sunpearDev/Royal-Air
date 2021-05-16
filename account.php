@@ -1,5 +1,5 @@
 <?php
-    if (!isset($_COOKIE['token']))
+if (!isset($_COOKIE['token']))
     echo "<script> window.location.pathname='index.php'</script>";
 ?>
 <!doctype html>
@@ -37,11 +37,8 @@
                 include('./backend/Booking.php');
                 include('./backend/Category.php');
                 $booking = new Booking();
-                $userbookings = $booking->getUserBooking($_COOKIE['token']);
-                foreach ($userbookings as $item) {
-                    $category = new Category();
-                    $booking_category = $category->getCategory($item['category_ID']);
-                    //print_r($booking_category);
+                $item = $booking->getUserBooking($_COOKIE['token']);
+                if (count($item) > 0) {
                     echo ' 
             <div class="card mt-3 mb-3 border border-warning">
                 <div class="card-header">
@@ -51,9 +48,20 @@
                     <h3 class="card-title">Booking id:' . $item['booking_ID'] . '</h3>
                 </div>
                 <ul class="list-group list-group-flush">
-                <li class="list-group-item"><h4>' . $booking_category[0]['category_name'] . ' x '.$item['quantity'].'</h4></li>
+                <li class="list-group-item"><div class="row">';
+
+                    for ($i = 0; $i < count($item['detail']); $i++) {
+                        $detail = $item['detail'][$i];
+                        echo '<div class="col-md-' . (12 / count($item['detail'])) . '">
+                    <ul class="list-group list-group-flush">
+                        <h4 class="list-group-item">' . $detail['category_name'] . ' x ' . $detail['quantity'] . '</h4>
+                        <h6 class="list-group-item">' . $detail['price_on_day'] * $detail['quantity'] . '$ per day</h6>
+                    </ul>
+                    </div>';
+                    }
+
+                    echo '</div></li>
                 <li class="list-group-item">' . $item['adult'] . ' adult and ' . $item['children'] . ' child</li>
-                <li class="list-group-item">'.$booking_category[0]['price_on_day'].' $ per day</li>
               </ul>
               <div class="card-body">
               <h4 class="money">' . $item['total_pay'] . ' $</h4>
