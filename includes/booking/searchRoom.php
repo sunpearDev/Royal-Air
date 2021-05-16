@@ -9,13 +9,13 @@ $res = $category->getAllCategory();
         <div class="table-head">
             <h2 class="country w-100 p-3">
                 <?php
-                echo 'Room for ' . $_POST['adult'] . ' adult';
-                if ($_POST['child'] > 0) echo ' and ' . $_POST['child'] . ' child';
+                echo 'Phòng cho ' . $_POST['adult'] . ' người lớn';
+                if ($_POST['child'] > 0) echo ' and ' . $_POST['child'] . ' trẻ con';
                 ?>
             </h2>
         </div>
         <div class="table-row">
-            <form class="row" method="get" action="<?php echo './booking.php?booking=true';?>">
+            <form class="row" method="get" action="<?php echo './booking.php?booking=true'; ?>">
                 <?php
                 foreach ($res as $item) {
                     $html = '<div class="col-md-12">
@@ -72,9 +72,8 @@ $res = $category->getAllCategory();
                                         <h3 class="mb-0">' . $item['category_name'];
                     $html .= '</h3>
                                         <div class="mb-1 text-muted"><i class="fas fa-square"></i> ' . $item['area'] . ' m2</div>
-                                        <div class="mb-0">' . $item['single_bed'] . ' single bed <img width="16px" class="bed" src="image/single-bed.png" /> ,' . $item['double_bed'] . ' double bed <img width="16px" class="bed" src="image/double-bed.jpg" /></div>
-                                        <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="/room_detail.php" class="stretched-link">Learn more</a>
+                                        <div class="mb-0">' . $item['single_bed'] . ' giường đơn <img width="16px" class="bed" src="image/single-bed.png" /> ,' . $item['double_bed'] . ' giường đôi <img width="16px" class="bed" src="image/double-bed.jpg" /></div>
+                                        <a href="/room_detail.php" class="stretched-link">Chi tiết</a>
                                     </div>
                                     ';
                     if ($item['available'] > 0) {
@@ -90,7 +89,7 @@ $res = $category->getAllCategory();
                                     </div>';
                     } else $html .= '<div class="col-md-4 p-5 align-self-center">
                                     <div class="d-flex justify-content-center">
-                                        <h4 class="text-danger p-3 border-3 border border-danger">Sold out</h4>
+                                        <h4 class="text-danger p-3 border-3 border border-danger">Hết phòng</h4>
                                     </div>
                                 </div>';
                     $html .= '
@@ -101,12 +100,17 @@ $res = $category->getAllCategory();
                     echo $html;
                 }
                 ?>
-                <input type="hidden" name="check_in" value="<?php echo $_POST['check_in'];?>">
-                <input type="hidden" name="check_out" value="<?php echo $_POST['check_out'];?>">
-                <input type="hidden" name="adult" value="<?php echo $_POST['adult'];?>">
-                <input type="hidden" name="child" value="<?php echo $_POST['child'];?>">
-                <div class="d-flex justify-content-lg-center">
-                    <button type="submit" name="booking" value="true" class="book_now_btn button_hover circle">BOOK IT</button>
+                <input type="hidden" name="check_in" value="<?php echo $_POST['check_in']; ?>">
+                <input type="hidden" name="check_out" value="<?php echo $_POST['check_out']; ?>">
+                <input type="hidden" name="adult" value="<?php echo $_POST['adult']; ?>">
+                <input type="hidden" name="child" value="<?php echo $_POST['child']; ?>">
+                <div class="row" id="book_zone">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <button type="submit" name="booking" value="true" class=" book_now_btn button_hover circle">ĐẶT</button>
+                    </div>
+                    <div class="col-md-4"></div>
+
                 </div>
             </form>
 

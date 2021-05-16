@@ -20,13 +20,13 @@ if (!isset($_COOKIE['token']))
                     <li class="nav-item">
                         <a class="nav-link <?php if (isset($_GET['info']) && $_GET['info']) echo "border border-primary" ?>"" href=" ?info=true">
                             <i class="fas fa-info-circle"></i>
-                            Your infor
+                            Thông tin
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php if (isset($_GET['booking']) && $_GET['booking']) echo "border border-primary" ?>" href="?booking=true">
                             <i class="fas fa-hotel"></i>
-                            Your room
+                            Đã đặt
                         </a>
                     </li>
             </div>
@@ -42,10 +42,10 @@ if (!isset($_COOKIE['token']))
                     echo ' 
             <div class="card mt-3 mb-3 border border-warning">
                 <div class="card-header">
-                    Form ' . $item['check_in'] . ' to ' . $item['check_out'] . ' 
+                    Từ ' . $item['check_in'] . ' đến ' . $item['check_out'] . ' 
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title">Booking id:' . $item['booking_ID'] . '</h3>
+                    <h3 class="card-title"> Mã đặt phòng :' . $item['booking_ID'] . '</h3>
                 </div>
                 <ul class="list-group list-group-flush">
                 <li class="list-group-item"><div class="row">';
@@ -55,17 +55,16 @@ if (!isset($_COOKIE['token']))
                         echo '<div class="col-md-' . (12 / count($item['detail'])) . '">
                     <ul class="list-group list-group-flush">
                         <h4 class="list-group-item">' . $detail['category_name'] . ' x ' . $detail['quantity'] . '</h4>
-                        <h6 class="list-group-item">' . $detail['price_on_day'] * $detail['quantity'] . '$ per day</h6>
+                        <h6 class="list-group-item">' . $detail['price_on_day'] * $detail['quantity'] . '$ mỗi đêm</h6>
                     </ul>
                     </div>';
                     }
 
                     echo '</div></li>
-                <li class="list-group-item">' . $item['adult'] . ' adult and ' . $item['children'] . ' child</li>
+                <li class="list-group-item">' . $item['adult'] . ' người lớn and ' . $item['children'] . ' trẻ con</li>
               </ul>
               <div class="card-body">
               <h4 class="money">' . $item['total_pay'] . ' $</h4>
-                <a href="#" class="card-link">Card link</a>
               </div>
             </div>';
                 }

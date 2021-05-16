@@ -3,30 +3,28 @@
         <div class="row">
             <div class="col-lg-3  col-md-6 col-sm-6">
                 <div class="single-footer-widget">
-                    <h6 class="footer_title">About Agency</h6>
-                    <p>The world has become so fast paced that people don’t want to stand by reading a page of
-                        information, they would much rather look at a presentation and understand the message. It
-                        has come to a point </p>
+                    <h6 class="footer_title">Về đại lý</h6>
+                    <p>Thế giới đã trở nên có nhịp độ nhanh đến mức mọi người không muốn đứng đọc một trang thông tin, họ muốn xem bản trình bày và hiểu thông điệp. Nó đã đi đến một điểm</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="single-footer-widget">
-                    <h6 class="footer_title">Navigation Links</h6>
+                    <h6 class="footer_title">Liên kết điều hướng</h6>
                     <div class="row">
                         <div class="col-4">
                             <ul class="list_style">
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">Feature</a></li>
-                                <li><a href="#">Services</a></li>
-                                <li><a href="#">Portfolio</a></li>
+                                <li><a href="#">Trang Chủ</a></li>
+                                <li><a href="#">Đặc tính</a></li>
+                                <li><a href="#">Dịch vụ</a></li>
+                                <li><a href="#">Danh mục đầu tư</a></li>
                             </ul>
                         </div>
                         <div class="col-4">
                             <ul class="list_style">
                                 <li><a href="#">Team</a></li>
-                                <li><a href="#">Pricing</a></li>
+                                <li><a href="#">Định giá</a></li>
                                 <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><a href="#">Liên lạc</a></li>
                             </ul>
                         </div>
                     </div>
@@ -34,9 +32,8 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="single-footer-widget">
-                    <h6 class="footer_title">Newsletter</h6>
-                    <p>For business professionals caught between high OEM price and mediocre print and graphic
-                        output, </p>
+                    <h6 class="footer_title">Bản tin</h6>
+                    <p>Đối với các chuyên gia kinh doanh bị mắc kẹt giữa giá OEM cao và sản lượng in và đồ họa tầm thường,</p>
                     <div id="mc_embed_signup">
                         <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative">
                             <div class="input-group d-flex flex-row">
@@ -71,8 +68,7 @@
                 Copyright &copy;
                 <script>
                     document.write(new Date().getFullYear());
-                </script> All rights reserved | This template is
-                made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                </script>Tất cả các quyền | Mẫu này được làm <i class="fa fa-heart-o" aria-hidden="true"></i> bởi<a href="https://colorlib.com" target="_blank">Colorlib</a>
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
             <div class="col-lg-4 col-sm-12 footer-social">

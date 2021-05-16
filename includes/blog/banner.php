@@ -3,9 +3,9 @@
     </div>
     <div class="container">
         <div class="banner_content text-center">
-            <h4>Dude You’re Getting <br />a Telescope</h4>
-            <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first</p>
-            <a href="#" class="btn white_btn button_hover">View More</a>
+            <h4>Bạn đang nhận được <br />một kính viễn vọng</h4>
+            <p>Có một khoảnh khắc trong cuộc đời của bất kỳ nhà thiên văn học tham vọng nào rằng đã đến lúc mua nó trước tiên</p>
+            <a href="#" class="btn white_btn button_hover">Xem thêm</a>
         </div>
     </div>
 </section>

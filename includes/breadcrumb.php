@@ -11,7 +11,7 @@
                 </script>
             </h2>
             <ol class="breadcrumb">
-                <li><a href="/index">Home</a></li>
+                <li><a href="/index">Trang Chủ</a></li>
                 <li class="active">
                     <script>
                         getTitle()

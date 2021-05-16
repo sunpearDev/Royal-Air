@@ -3,11 +3,9 @@
         <div class="row">
             <div class="col-md-6 d_flex align-items-center">
                 <div class="about_content ">
-                    <h2 class="title title_color">About Us <br>Our History<br>Mission & Vision</h2>
-                    <p>inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct
-                        standards especially in the workplace. That’s why it’s crucial that, as women, our behavior
-                        on the job is beyond reproach. inappropriate behavior is often laughed.</p>
-                    <a href="#" class="button_hover theme_btn_two">Request Custom Price</a>
+                    <h2 class="title title_color">Về chúng tôi <br> Lịch sử của chúng tôi <br> Sứ mệnh & Tầm nhìn </h2>
+                     <p> hành vi không phù hợp thường bị chê cười là "con trai sẽ là con trai", phụ nữ phải đối mặt với các tiêu chuẩn ứng xử cao hơn, đặc biệt là ở nơi làm việc. Đó là lý do tại sao điều quan trọng là, với tư cách là phụ nữ, hành vi của chúng ta trong công việc là không thể chê trách. hành vi không phù hợp thường bị chê cười. </p>
+                     <a href="#" class="button_hover theme_btn_two"> Yêu cầu giá tùy chỉnh </a>
                 </div>
             </div>
             <div class="col-md-6">
