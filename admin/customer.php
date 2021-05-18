@@ -74,137 +74,6 @@ if (isset(
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
 
-                <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                <li class="nav-item dropdown no-arrow d-sm-none">
-                    <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-search fa-fw"></i>
-                    </a>
-                    <!-- Dropdown - Messages -->
-                    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                        <form class="form-inline mr-auto w-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Alerts -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell fa-fw"></i>
-                        <!-- Counter - Alerts -->
-                        <span class="badge badge-danger badge-counter">3+</span>
-                    </a>
-                    <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                        <h6 class="dropdown-header">
-                            Alerts Center
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">December 12, 2019</div>
-                                <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-success">
-                                    <i class="fas fa-donate text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">December 7, 2019</div>
-                                $290.29 has been deposited into your account!
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-warning">
-                                    <i class="fas fa-exclamation-triangle text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="small text-gray-500">December 2, 2019</div>
-                                Spending Alert: We've noticed unusually high spending for your account.
-                            </div>
-                        </a>
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Messages -->
-                <li class="nav-item dropdown no-arrow mx-1">
-                    <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-envelope fa-fw"></i>
-                        <!-- Counter - Messages -->
-                        <span class="badge badge-danger badge-counter">7</span>
-                    </a>
-                    <!-- Dropdown - Messages -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                        <h6 class="dropdown-header">
-                            Message Center
-                        </h6>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
-                                <div class="status-indicator bg-success"></div>
-                            </div>
-                            <div class="font-weight-bold">
-                                <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                    problem I've been having.</div>
-                                <div class="small text-gray-500">Emily Fowler · 58m</div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
-                                <div class="status-indicator"></div>
-                            </div>
-                            <div>
-                                <div class="text-truncate">I have the photos that you ordered last month, how
-                                    would you like them sent to you?</div>
-                                <div class="small text-gray-500">Jae Chun · 1d</div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
-                                <div class="status-indicator bg-warning"></div>
-                            </div>
-                            <div>
-                                <div class="text-truncate">Last month's report looks great, I am very happy with
-                                    the progress so far, keep up the good work!</div>
-                                <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
-                            <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
-                                <div class="status-indicator bg-success"></div>
-                            </div>
-                            <div>
-                                <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                    told me that people say this to all dogs, even if they aren't good...</div>
-                                <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                            </div>
-                        </a>
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                    </div>
-                </li>
-
-                <div class="topbar-divider d-none d-sm-block"></div>
-
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -242,7 +111,7 @@ if (isset(
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">All Customer</h1>
+            <h1 class="h3 mb-2 text-gray-800">Danh sách khách hàng</h1>
             <div class="alert" role="alert" id="notification">
             </div>
             <?php if (isset($resultEdit)) { ?>
@@ -255,19 +124,19 @@ if (isset(
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Customers</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Khách hàng</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered display" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th><a href="./account.php" />User ID</th>
-                                    <th>Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Gender</th>
-                                    <th>Address</th>
-                                    <th>Identify Number</th>
+                                    <th><a href="./account.php" />Mã tài khoản</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Giới tính</th>
+                                    <th>Địa chỉ</th>
+                                    <th>CMND</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -285,7 +154,7 @@ if (isset(
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">EDIT</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Sửa</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -295,8 +164,8 @@ if (isset(
 
                             <input type="text" hidden name="user_id1">
                             <div class="form-group">
-                                User:<select class="form-control" id="exampleFormControlSelect1" name="user_id">
-                                    <option value="" selected disabled>Username</option>
+                                Tài khoản:<select class="form-control" id="mataikhoan" name="user_id">
+                                    <option value="" selected disabled>Tên tài khoản</option>
                                     <?php
                                     $DB =  new DbServices();
                                     $roomType = $DB->getAll('account');
@@ -310,32 +179,32 @@ if (isset(
                             </div>
 
                             <div class="form-group">
-                                Name:<input type="text" name="name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Name" required aria-describedby="basic-addon1">
+                                Tên khách hàng:<input type="text" name="name" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'" placeholder="Name" aria-label="Name" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                Phone number:<input type="text" name="phone_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" placeholder="Phone Number" aria-label="Phone Number" required aria-describedby="basic-addon1">
+                                Số điện thoại:<input type="text" name="phone_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone Number'" placeholder="Phone Number" aria-label="Phone Number" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                Gender:<select class="form-control" name="gender">
-                                    <option value="" selected disabled>Gender</option>
-                                    <option value="1">Male</option>
-                                    <option value="0">Female</option>
+                                Giới tính:<select class="form-control" id="gioitinh" name="gender">
+                                    <option value="" selected disabled>Giới tính</option>
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                Address:<input type="text" name="address" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" placeholder="Address" aria-label="Address" required aria-describedby="basic-addon1">
+                                Địa chỉ:<input type="text" name="address" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" placeholder="Address" aria-label="Address" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="form-group">
-                                Identify number:<input type="text" name="identify_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Identify Number'" placeholder="Identify Number" aria-label="Identify Number" required aria-describedby="basic-addon1">
+                                CMND:<input type="text" name="identify_number" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Identify Number'" placeholder="Identify Number" aria-label="Identify Number" required aria-describedby="basic-addon1">
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                             </div>
                         </form>
                     </div>
@@ -347,6 +216,8 @@ if (isset(
         <script>
             $(document).ready(function() {
                 var dataTable = $('#dataTable').dataTable({
+                    searching: false,
+                    ordering: false,
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
@@ -405,6 +276,22 @@ if (isset(
                     } catch (e) {
                         inputs[i].value = ''
                     }
+                }
+                var idedit = $(this).parents('tr')[0].childNodes[0].firstChild.nodeValue
+                $('#mataikhoan option')
+                    .removeAttr('selected')
+                    .filter('[value=' + idedit + ']')
+                    .attr('selected', true)
+                if ($(this).parents('tr')[0].childNodes[3].firstChild.nodeValue == 'Nam') {
+                    $('#gioitinh option')
+                        .removeAttr('selected')
+                        .filter('[value=1]')
+                        .attr('selected', true)
+                } else {
+                    $('#gioitinh option')
+                        .removeAttr('selected')
+                        .filter('[value=0]')
+                        .attr('selected', true)
                 }
             });
             // Delete a record

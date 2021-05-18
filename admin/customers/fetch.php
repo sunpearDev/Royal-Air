@@ -22,9 +22,9 @@ while ($row = mysqli_fetch_array($query)) {
     $subdata['name'] = $row[1];
     $subdata['phone_number'] = $row[2];
     if ($row[3] == 1)
-        $subdata['gender'] = 'Male';
+        $subdata['gender'] = 'Nam';
     else
-        $subdata['gender'] = 'Female';
+        $subdata['gender'] = 'Nữ';
     $subdata['address'] = $row[4];
     $subdata['identify_number'] = $row[5];
     $data[] = $subdata;
